@@ -52,21 +52,10 @@ module.exports = (sequelize, DataTypes) => {
                     },
                 },
             },
-            // isAdmin: {
-            //     type: DataTypes.BOOLEAN,
-            //     defaultValue: false,
-            //     allowNull: true,
-            //     validate: {
-            //         isBoolean: ((isAdmin) => {
-            //             return typeof isAdmin === "boolean";
-            //         })(),
-            //     },
-            // },
             roleId: {
-                type: DataTypes.INTEGER, //TODO: assuming an Auto Increment id
-                allowNull: false, //FIXME: allow null?
-                //references: { model: Role, key: "roleId" },
-                validate: { isInt: true }, //TODO: set validation
+                type: DataTypes.INTEGER, 
+                allowNull: false,
+                validate: { isInt: true },
                 onUpdate: "CASCADE",
                 onDelete: "SET NULL",
             },

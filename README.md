@@ -26,3 +26,36 @@ npx sequelize-cli db:seed:all
 ``` bash
 npm start
 ```
+
+## User seeds
+
+> Admin Users:
+> {firstName} {lastName} : {email} - {password}
+>
+> > Hugo Foncea : hf.admin@mail.com - admin123
+> > Emmanuel Ranone : er.admin@mail.com - admin123
+> > Antonio Ludueña : al.admin@mail.com - admin123
+> > Benjamin Potobsky : bp.admin@mail.com - admin123
+> > Fernanda Ramirez : : fr.admin@mail.com - admin123
+> > Ignacio Garcia : ig.admin@mail.com - admin123
+> > Juan Juan : jj.admin@mail.com - admin123
+> > Luciano Ibarra : li.admin@mail.com - admin123
+> > Marcos Caballero : mca.admin@mail.com - admin123
+> > Michel Chamarez : mch.admin@mail.com - admin123
+> > Martin Cappi : mcd.admin@mail.com - admin123
+
+
+> Regular Users:
+> {firstName} {lastName} : {email} - {password}
+>
+> > Hugo Foncea : hf.user@mail.com - user123
+> > Emmanuel Ranone : er.user@mail.com - user123
+> > Antonio Ludueña : al.user@mail.com - user123
+> > Benjamin Potobsky : bp.user@mail.com - user123
+> > Fernanda Ramirez : : fr.user@mail.com - user123
+> > Ignacio Garcia : ig.user@mail.com - user123
+> > Juan Juan : jj.user@mail.com - user123
+> > Luciano Ibarra : li.user@mail.com - user123
+> > Marcos Caballero : mca.user@mail.com - user123
+> > Michel Chamarez : mch.user@mail.com - user123
+> > Martin Cappi : mcd.user@mail.com - user123
