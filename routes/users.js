@@ -37,4 +37,18 @@ router.put('/', async (req, res) => {
   }   
 });
 
+/////////////////////////////////////////////////////////////////////DELETE
+
+router.delete('/', async (req, res) => {
+  try{
+      const response = await User.destroy({
+          where: {email: req.user.email}
+      })
+      res.send(response);
+  }
+  catch(e){
+      res.status(403).send({message: e.message});
+  }   
+})
+
 module.exports = router;
