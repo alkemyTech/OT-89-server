@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { strinValidation } = require("../helpers/validation/modelValidation");
 
 //USER ROLE MODEL
 module.exports = (sequelize, DataTypes) => {
@@ -27,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: /[a-z A-Z]{1,15}/, //FIXME:RegExp, doesn't include special characters. Refine
+                        args: strinValidation(2, 15), //FIXME:RegExp doesn't include special characters. Refine
                         msg: "Invalid role name",
                     },
                 },
@@ -37,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: /[a-z A-Z]{1,100}/, //FIXME:RegExp, doesn't include special characters. Refine
+                        args: strinValidation(2, 100), //FIXME:RegExp doesn't include special characters. Refine
                         msg: "Invalid role description",
                     },
                 },
@@ -55,7 +56,6 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: "Role",
-            //tableName:"", //FIXME: exact table name at the database
             paranoid: true,
             timestamps: true,
         }

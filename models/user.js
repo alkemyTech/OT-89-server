@@ -1,6 +1,7 @@
 ("use strict");
 const { Model } = require("sequelize");
 const { HashSync } = require("../helpers/auth/hash");
+const { strinValidation } = require("../helpers/validation/modelValidation");
 
 //USER MODEL
 module.exports = (sequelize, DataTypes) => {
@@ -38,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: /[a-z A-Z]{2,45}/, //FIXME:RegExp, doesn't include special characters. Refine
+                        args: strinValidation(2,45), //FIXME:RegExp doesn't include special characters. Refine
                         msg: "Invalid first name",
                     },
                 },
@@ -48,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: /[a-z A-Z]{2,45}/, //FIXME:RegExp, doesn't include special characters. Refine
+                        args: strinValidation(2,45), //FIXME:RegExp doesn't include special characters. Refine
                         msg: "Invalid last name",
                     },
                 },
@@ -78,7 +79,6 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: "User",
-            //tableName:"", //FIXME: exact table name at the database
             timestamps: true,
             paranoid: true,
             hooks: {
