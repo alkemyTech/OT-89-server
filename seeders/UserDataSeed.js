@@ -35,10 +35,10 @@ const adminSeed = [
         roleId: 1,
     },
     {
-        email: "jj.admin@mail.com",
+        email: "ja.admin@mail.com",
         password: "admin123",
         firstName: "Juan",
-        lastName: "Juan",
+        lastName: "Abal",
         roleId: 1,
     },
     {
@@ -115,10 +115,10 @@ const regularSeed = [
         roleId: 2,
     },
     {
-        email: "jj.user@mail.com",
+        email: "ja.user@mail.com",
         password: "user123",
         firstName: "Juan",
-        lastName: "Juan",
+        lastName: "Abal",
         roleId: 2,
     },
     {

@@ -40,7 +40,7 @@ npm start
 > > Benjamin Potobsky : bp.admin@mail.com - admin123 ;
 > > Fernanda Ramirez : : fr.admin@mail.com - admin123 ;
 > > Ignacio Garcia : ig.admin@mail.com - admin123 ;
-> > Juan Juan : jj.admin@mail.com - admin123 ;
+> > Juan Abal : ja.admin@mail.com - admin123 ;
 > > Luciano Ibarra : li.admin@mail.com - admin123 ;
 > > Marcos Caballero : mca.admin@mail.com - admin123 ;
 > > Michel Chamarez : mch.admin@mail.com - admin123 ;
@@ -55,7 +55,7 @@ npm start
 > > Benjamin Potobsky : bp.user@mail.com - user123 ;
 > > Fernanda Ramirez : : fr.user@mail.com - user123 ;
 > > Ignacio Garcia : ig.user@mail.com - user123 ;
-> > Juan Juan : jj.user@mail.com - user123 ;
+> > Juan Abal : ja.user@mail.com - user123 ;
 > > Luciano Ibarra : li.user@mail.com - user123 ;
 > > Marcos Caballero : mca.user@mail.com - user123 ;
 > > Michel Chamarez : mch.user@mail.com - user123 ;
