@@ -158,4 +158,14 @@ const regularSeed = [
     },
 ];
 
-module.exports = { adminSeed, regularSeed };
+module.exports = {
+    adminSeed,
+    regularSeed,
+    up: async () => {
+        return;
+    },
+    down: async () => {
+        return;
+    },
+};
+//up and down are there to silence an error during migration, they are faking a seeder

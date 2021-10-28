@@ -1,5 +1,7 @@
 ("use strict");
 const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
+
 
 //USER MODEL
 module.exports = (sequelize, DataTypes) => {
@@ -10,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            User.belongsTo(models.Role, { as: "roleId" });
+            User.belongsTo(models.Role, { foreignKey: "roleId" });
         }
     }
     User.init(
@@ -53,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
             roleId: {
-                type: DataTypes.INTEGER, 
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 validate: { isInt: true },
                 onUpdate: "CASCADE",
@@ -66,11 +68,11 @@ module.exports = (sequelize, DataTypes) => {
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
+                type: DataTypes.DATE,
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
+                type: DataTypes.DATE,
             },
         },
         {
