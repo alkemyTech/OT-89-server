@@ -1,6 +1,5 @@
 ("use strict");
 const { Model } = require("sequelize");
-//const bcrypt = require("bcrypt");
 const { HashSync } = require("../helpers/auth/hash");
 
 //USER MODEL

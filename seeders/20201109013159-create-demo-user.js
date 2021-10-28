@@ -1,5 +1,4 @@
 "use strict";
-const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const db = require("../models/index");
 const { adminSeed, regularSeed } = require("./UserDataSeed");
@@ -8,7 +7,6 @@ const User = db.sequelize.models.User;
 //FIXME: Make sure that hashing matches with the one at register/login routes
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        //await queryInterface.bulkInsert("Users", [...adminSeed, ...regularSeed], {
         await User.bulkCreate([...adminSeed, ...regularSeed], {});
     },
 
