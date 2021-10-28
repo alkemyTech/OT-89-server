@@ -18,4 +18,23 @@ router.get('/', async (req, res) => {
   }
 })
 
+/////////////////////////////////////////////////////////////////////PUT
+
+router.put('/', async (req, res) => {
+  try{
+      const response = await User.update({
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
+              email: req.body.email
+          }, {
+              where: {email: req.user.email}
+          }
+      )
+      res.send(response);
+  }
+  catch(e){
+      res.status(403).send({message: e.message});
+  }   
+});
+
 module.exports = router;
