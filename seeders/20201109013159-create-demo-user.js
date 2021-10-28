@@ -9,31 +9,7 @@ const User = db.sequelize.models.User;
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         //await queryInterface.bulkInsert("Users", [...adminSeed, ...regularSeed], {
-        await User.bulkCreate([...adminSeed, ...regularSeed], {
-            // hooks: {
-            //     //FIXME: hooks are not working
-            //     beforeBulkCreate: async (bulk) => {
-            //         return await bulk.map(async (user) => {
-            //             throw new Error(`entre a Hooks ${user}`);
-            //         });
-            //     },
-            // },
-            // individualHooks: {
-            //     //FIXME: hooks are not working
-            //     beforeCreate: async (user) => {
-            //         throw new Error(`entre a individualHooks ${user}`);
-            //     },
-            // },
-            // beforeBulkCreate: async (bulk) => {
-            //     return await bulk.map(async (user) => {
-            //         throw new Error(`entre a Hooks ${user}`);
-            //     });
-            // },
-            // //FIXME: hooks are not working
-            // beforeCreate: async (user) => {
-            //     throw new Error(`entre a individualHooks ${user}`);
-            // },
-        });
+        await User.bulkCreate([...adminSeed, ...regularSeed], {});
     },
 
     down: async (queryInterface, Sequelize) => {

@@ -88,19 +88,6 @@ module.exports = (sequelize, DataTypes) => {
                     return await bulk.map(async (user) => {
                         if (user.password) {
                             //replaces the incoming password for its hashed state before registering it into the database
-
-                            // const salt = await bcrypt.genSaltSync(10, "a");
-                            // user.password = bcrypt.hashSync(
-                            //     user.password,
-                            //     salt
-                            // );
-
-                            // const hash = await Hash(user.password);
-                            // if(hash){
-                            //     user.password =  hash
-                            //     return user;
-                            // }else
-                            // throw new Error(`entre a model user beforeBulkCreate ${hash}`);
                             user.password = await HashSync(user.password);
                             return user;
                         }
