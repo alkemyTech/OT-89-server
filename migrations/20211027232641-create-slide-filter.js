@@ -9,11 +9,11 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             name: {
-                type: DataTypes.STRING(25),
+                type: Sequelize.STRING(25),
                 allowNull: false,
             },
             description: {
-                type: DataTypes.STRING(100),
+                type: Sequelize.STRING(100),
                 allowNull: false,
             },
             createdAt: {

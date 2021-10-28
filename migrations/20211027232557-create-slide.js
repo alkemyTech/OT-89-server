@@ -3,32 +3,32 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable("Slides", {
             slideId: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false,
                 primaryKey: true,
                 autoIncrement: true,
             },
             imageUrl: {
-                type: DataTypes.STRING(500),
+                type: Sequelize.STRING(500),
                 allowNull: false,
             },
             text: {
-                type: DataTypes.STRING(2000),
+                type: Sequelize.STRING(2000),
                 allowNull: false,
             },
             order: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: true,
             },
             organizationId: {
-                type: DataTypes.INTEGER, //TODO: assuming an Auto Increment id
+                type: Sequelize.INTEGER, //TODO: assuming an Auto Increment id
                 allowNull: false,
                 references: { model: Organization, key: "organizationId" }, //TODO: check that it is so
                 onUpdate: "CASCADE",
                 onDelete: "SET NULL",
             },
             filterId: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false,
                 references: { model: SlideFilter, key: "filterId" },
                 onUpdate: "CASCADE",
