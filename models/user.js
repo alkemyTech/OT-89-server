@@ -81,6 +81,20 @@ module.exports = (sequelize, DataTypes) => {
             //tableName:"", //FIXME: exact table name at the database
             timestamps: true,
             paranoid: true,
+            hooks: {
+                beforeBulkCreate: async (bulk) => {
+                    return await bulk.map(async (user) => {
+                        if (user.password) {
+                            const salt = await bcrypt.genSaltSync(10, "a");
+                            user.password = bcrypt.hashSync(
+                                user.password,
+                                salt
+                            ); //replaces the incoming password for its hashed state before registering it into the database
+                            return user;
+                        }
+                    });
+                },
+            },
         }
     );
     return User;
