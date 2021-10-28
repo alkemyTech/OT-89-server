@@ -1,7 +1,7 @@
 ("use strict");
 const { Model } = require("sequelize");
-const bcrypt = require("bcrypt");
-
+//const bcrypt = require("bcrypt");
+const { HashSync } = require("../helpers/auth/hash");
 
 //USER MODEL
 module.exports = (sequelize, DataTypes) => {
@@ -56,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             roleId: {
                 type: DataTypes.INTEGER,
+                defaultValue: 2,
                 allowNull: false,
                 validate: { isInt: true },
                 onUpdate: "CASCADE",
@@ -83,13 +84,24 @@ module.exports = (sequelize, DataTypes) => {
             paranoid: true,
             hooks: {
                 beforeBulkCreate: async (bulk) => {
+                    //CAUTION: This is needed for seeding, hashing user passwords in bulk.
                     return await bulk.map(async (user) => {
                         if (user.password) {
-                            const salt = await bcrypt.genSaltSync(10, "a");
-                            user.password = bcrypt.hashSync(
-                                user.password,
-                                salt
-                            ); //replaces the incoming password for its hashed state before registering it into the database
+                            //replaces the incoming password for its hashed state before registering it into the database
+
+                            // const salt = await bcrypt.genSaltSync(10, "a");
+                            // user.password = bcrypt.hashSync(
+                            //     user.password,
+                            //     salt
+                            // );
+
+                            // const hash = await Hash(user.password);
+                            // if(hash){
+                            //     user.password =  hash
+                            //     return user;
+                            // }else
+                            // throw new Error(`entre a model user beforeBulkCreate ${hash}`);
+                            user.password = await HashSync(user.password);
                             return user;
                         }
                     });
