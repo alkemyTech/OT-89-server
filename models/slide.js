@@ -1,5 +1,6 @@
 ("use strict");
 const { Model } = require("sequelize");
+const { stringValidation } = require("../helpers/validation/modelValidation");
 
 //SLIDE MODEL
 module.exports = (sequelize, DataTypes) => {
@@ -33,7 +34,12 @@ module.exports = (sequelize, DataTypes) => {
             text: {
                 type: DataTypes.STRING(2000),
                 allowNull: false,
-                //validate: { is: true }, //TODO: set validation
+                validate: {
+                    is: {
+                        args: stringValidation(2, 2000), //FIXME:RegExp doesn't include special characters. Refine
+                        msg: "Invalid text",
+                    },
+                },
             },
             order: {
                 type: DataTypes.INTEGER,
@@ -51,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
             filterId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-                references:{model:SlideFilter, key:"filterId"},
+                references: { model: SlideFilter, key: "filterId" },
                 validate: { isInt: true },
                 onUpdate: "CASCADE",
                 onDelete: "SET NULL",
@@ -68,7 +74,6 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: "Slide",
-            //tableName:"", //FIXME: exact table name at the database
             timestamps: true,
         }
     );

@@ -1,5 +1,6 @@
 ("use strict");
 const { Model } = require("sequelize");
+const { stringValidation } = require("../helpers/validation/modelValidation");
 
 //SLIDE FILTER MODEL
 module.exports = (sequelize, DataTypes) => {
@@ -27,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: /[a-z A-Z]{1,25}/, //FIXME:RegExp, doesn't include special characters. Refine
-                        msg: "Invalid slide filter name",
+                        args: stringValidation(2, 25), //FIXME:RegExp doesn't include special characters. Refine
+                        msg: "Invalid filter name",
                     },
                 },
             },
@@ -37,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: /[a-z A-Z]{1,100}/, //FIXME:RegExp, doesn't include special characters. Refine
-                        msg: "Invalid slide filter description",
+                        args: stringValidation(2, 25), //FIXME:RegExp doesn't include special characters. Refine
+                        msg: "Invalid filter description",
                     },
                 },
             },
@@ -54,7 +55,6 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: "SlideFilter",
-            //tableName:"", //FIXME: exact table name at the database
             timestamps: true,
         }
     );
