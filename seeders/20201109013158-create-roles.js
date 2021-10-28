@@ -9,11 +9,15 @@ module.exports = {
                     roleId: 1,
                     name: "Admin",
                     description: "Usuario administrador",
+                    createdAt: new Date(),
+                    updatedAt: new Date()
                 },
                 {
                     roleId: 2,
                     name: "Standard",
                     description: "Usuario regular",
+                    createdAt: new Date(),
+                    updatedAt: new Date()
                 },
             ],
             {}
