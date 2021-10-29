@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user')
+const db = require('../models/index')
+const User = db.sequelize.models.User; 
 
 /////////////////////////////////////////////////////////////////////GET
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try{        
       const {firstName, lastName, email} = await User.findOne({ 
-          where: {email: req.user.email}})
+          where: {userId: req.params.id}})
 
       const response = {firstName, lastName, email}
 
@@ -20,14 +21,14 @@ router.get('/', async (req, res) => {
 
 /////////////////////////////////////////////////////////////////////PUT
 
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try{
       const response = await User.update({
               firstName: req.body.firstName,
               lastName: req.body.lastName,
               email: req.body.email
           }, {
-              where: {email: req.user.email}
+              where: {userId: req.params.id}
           }
       )
       res.send(response);
@@ -39,10 +40,10 @@ router.put('/', async (req, res) => {
 
 /////////////////////////////////////////////////////////////////////DELETE
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try{
       const response = await User.destroy({
-          where: {email: req.user.email}
+          where: {userId: req.params.id}
       })
       res.send(response);
   }
