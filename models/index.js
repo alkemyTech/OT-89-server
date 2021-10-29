@@ -9,6 +9,11 @@ const db = {};
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+//MODELS USAGE: 
+//To access a specific model, define as follows:
+//const db require("/models/index.js") -> beware to call on the path accordingly
+//const ModelName = db.sequelize.models.ModelName
+
 fs
   .readdirSync(__dirname)
   .filter(file => {
