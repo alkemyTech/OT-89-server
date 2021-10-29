@@ -3,19 +3,19 @@ const {  Model } = require('sequelize');
 const { stringValidation } = require("../helpers/validation/modelValidation");
 
 module.exports = (sequelize, DataTypes) => {
-  class Entrie extends Model {
+  class Entry extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Entrie.belongsTo(models.Categories, {
+      Entry.belongsTo(models.Categories, {
         foreignKey: "categoryId",
       });
     }
   };
-  Entrie.init({
+  Entry.init({
     name: {
       type: DataTypes.STRING(45),
       validate: {
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     deleteAt: DataTypes.DATE,  
   }, {
     sequelize,
-    modelName: 'Entrie',
+    modelName: 'Entry',
   });
-  return Entrie;
+  return Entry;
 };
