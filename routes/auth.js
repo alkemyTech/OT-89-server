@@ -6,9 +6,9 @@ const generateToken = require('../helpers/auth/generateToken')
 // db click
 const User = db.sequelize.models.User
 
-const router = express.Router()
+// const router = express.Router()
 
-router.post("/auth/register", 
+router.post("/register", 
     // Validate firstName
     body("firstName")
         .isLength({ min: 3 })
