@@ -4,7 +4,7 @@ const { Hash } = require('../helpers/auth/hash')
 const generateToken = require('../helpers/auth/generateToken')
 
 // db click
-// const User = db.sequelize.models.user
+const User = db.sequelize.models.User
 
 const router = express.Router()
 
