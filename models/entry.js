@@ -4,11 +4,6 @@ const { stringValidation } = require("../helpers/validation/modelValidation");
 
 module.exports = (sequelize, DataTypes) => {
   class Entry extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       Entry.belongsTo(models.Categories, {
         foreignKey: "categoryId",
