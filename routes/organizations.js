@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Organizations = require('../models/Organizations')
+const {Organizations} = require('../models/index').sequelize
 
 /* GET home page. */
 router.get('/:id/public', async (req, res, next) => {
