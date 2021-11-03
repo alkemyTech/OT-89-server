@@ -1,7 +1,7 @@
 'use strict';
 const {  Model } = require('sequelize');
 const { stringValidation } = require("../helpers/validation/modelValidation");
-const categories = require('./categories');
+const Categories = require('./categories');
 
 module.exports = (sequelize, DataTypes) => {
   class Entry extends Model {
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     categoryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {model: categories, key: "categoryId"},
+      references: {model: Categories, key: "categoryId"},
       validate: { isInt: true },
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
