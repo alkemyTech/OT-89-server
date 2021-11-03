@@ -11,9 +11,13 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            Slide.belongsTo(models.Organization, {
-                foreignKey: "organizationId",
-            });
+            if (models.Organization) {
+                Slide.belongsTo(models.Organization, {
+                    foreignKey: "organizationId",
+                });
+            } else {
+                console.log("WARNING: Organization model is missing as model reference for Slide model");
+            }
             Slide.belongsTo(models.SlideFilter, { foreignKey: "filterId" });
         }
     }
@@ -36,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: stringValidation(2, 2000), //FIXME:RegExp doesn't include special characters. Refine
+                        args: stringValidation(2, 2000),
                         msg: "Invalid text",
                     },
                 },
@@ -49,7 +53,6 @@ module.exports = (sequelize, DataTypes) => {
             organizationId: {
                 type: DataTypes.INTEGER, //TODO: assuming an Auto Increment id
                 allowNull: false,
-                references: { model: Organization, key: "organizationId" }, //TODO: check that it is so
                 validate: { isInt: true },
                 onUpdate: "CASCADE",
                 onDelete: "SET NULL",
@@ -57,18 +60,17 @@ module.exports = (sequelize, DataTypes) => {
             filterId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-                references: { model: SlideFilter, key: "filterId" },
                 validate: { isInt: true },
                 onUpdate: "CASCADE",
                 onDelete: "SET NULL",
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
+                type: DataTypes.DATE,
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
+                type: DataTypes.DATE,
             },
         },
         {
