@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: stringValidation(2, 25), //FIXME:RegExp doesn't include special characters. Refine
+                        args: stringValidation(2, 25), 
                         msg: "Invalid filter name",
                     },
                 },
@@ -38,18 +38,18 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     is: {
-                        args: stringValidation(2, 25), //FIXME:RegExp doesn't include special characters. Refine
+                        args: stringValidation(2, 25), 
                         msg: "Invalid filter description",
                     },
                 },
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
+                type: DataTypes.DATE,
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
+                type: DataTypes.DATE,
             },
         },
         {
