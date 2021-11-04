@@ -6,19 +6,19 @@ const { adminSeed, regularSeed } = require("./UserDataSeed");
 const User = db.sequelize.models.User;
 //FIXME: Make sure that hashing matches with the one at register/login routes
 module.exports = {
-    up: async (queryInterface, Sequelize) => {
-        await User.bulkCreate([...adminSeed, ...regularSeed], {});
-    },
+  up: async (queryInterface, Sequelize) => {
+    await User.bulkCreate([...adminSeed, ...regularSeed], {});
+  },
 
-    down: async (queryInterface, Sequelize) => {
-        /**
-         * Add commands to revert seed here.
-         */
-        await queryInterface.bulkDelete("Users", {
-            [Op.or]: [
-                { email: { [Op.like]: "%.user@mail.com" } },
-                { email: { [Op.like]: "%.admin@mail.com" } },
-            ],
-        });
-    },
+  down: async (queryInterface, Sequelize) => {
+    /**
+     * Add commands to revert seed here.
+     */
+    await queryInterface.bulkDelete("Users", {
+      [Op.or]: [
+        { email: { [Op.like]: "%.user@mail.com" } },
+        { email: { [Op.like]: "%.admin@mail.com" } },
+      ],
+    });
+  },
 };
