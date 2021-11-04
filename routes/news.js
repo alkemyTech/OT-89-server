@@ -7,6 +7,7 @@ const router = express.Router();
 //router.route("/").get(NewsList);
 
 //@DESC single news by id
-//router("/:id").get(middleware, NewsById);
+//@ROUTE /news/:id
+router.route("/:id").get(NewsById);
 
 module.exports = router;
