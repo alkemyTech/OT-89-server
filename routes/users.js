@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
 
     res.send(response);
   } catch (e) {
-    res.status(403).send({ message: e.message });
+    res.status(404).send({ message: e.message });
   }
 });
 
@@ -35,7 +35,7 @@ router.put("/:id", async (req, res) => {
     );
     res.send(response);
   } catch (e) {
-    res.status(403).send({ message: e.message });
+    res.status(400).send({ message: e.message });
   }
 });
 
@@ -59,7 +59,7 @@ router.delete("/:id", async (req, res) => {
     });
     res.send(response);
   } catch (e) {
-    res.status(403).send({ message: e.message });
+    res.status(404).send({ message: e.message });
   }
 });
 
