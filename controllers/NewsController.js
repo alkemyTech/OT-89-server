@@ -8,7 +8,7 @@ const Entry = db.sequelize.models.Entry;
 const NewsList = async (req, res, next) => {
     try {
         const newsArr = await Entry.findAll({
-            attributes: ["name", "image", "createdAt"],
+            attributes: ["name", "image", "createdAt", "id"],
             where: { type: "news" },
             order: [["createdAt", "DESC"]],
         });
