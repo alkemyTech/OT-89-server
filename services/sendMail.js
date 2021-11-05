@@ -1,6 +1,7 @@
 const sgMail = require('@sendgrid/mail')
+const config = require('../config')
 
-sgMail.setApiKey('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') //ApiKey created in sendGrid
+sgMail.setApiKey(config.SENDGRIND_API_KEY) //ApiKey created in sendGrid
 function sendMail(to, subject, text) {
 
     const msg = {
@@ -10,12 +11,14 @@ function sendMail(to, subject, text) {
         text: text,
         html: `<p>${text}</p>`,
     }
-    sgMail.send(msg).then(() => {}, error => {
-        console.log(error);
-        if (error.response) {
-            console.log(error.response.body)
-        }
-    })
+    try {
+        sgMail.send(msg)
+    } catch (error) {
+        return error.code
+    }
+    
+        
+
 };
 
 
