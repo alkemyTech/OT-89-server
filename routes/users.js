@@ -3,6 +3,8 @@ const router = express.Router();
 const db = require("../models/index");
 const User = db.sequelize.models.User;
 
+//importar middleware de autenticacion
+
 /////////////////////////////////////////////////////////////////////GET
 
 router.get("/:id", async (req, res) => {
@@ -44,15 +46,11 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    let query = await User.findOne({
-      where: { userId: req.params.id },
-    });
+    let query = await User.findByPk(req.params.id);
 
     if (!query) {
       //Si no encuentra el usuario no existe
-      throw new Error(
-        "El usuario que intenta eliminar no existe en la base de datos"
-      );
+      res.status(400).json({ message: "User not found" })
     }
     const response = await User.destroy({
       where: { userId: req.params.id },
