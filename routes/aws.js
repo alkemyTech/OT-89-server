@@ -74,4 +74,21 @@ router.post("/upload", upload, (req, res) => {
   });
 });
 
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await s3
+      .deleteObject({
+        Bucket: awsConfig.bucketName,
+        Key: id,
+      })
+      .promise();
+
+    res.send(response);
+  } catch (err) {
+    console.log(err, err.message);
+  }
+});
+
 module.exports = router;
