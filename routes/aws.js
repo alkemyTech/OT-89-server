@@ -22,4 +22,23 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET by ID
+// Middleware to get the file from S3 still needs to be implemented
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await s3
+      .getObject({
+        Bucket: awsConfig.bucketName,
+        Key: id,
+      })
+      .promise();
+
+    res.send(response);
+  } catch (err) {
+    console.log(err, err.message);
+  }
+});
+
 module.exports = router;
