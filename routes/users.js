@@ -9,9 +9,7 @@ const User = db.sequelize.models.User;
 
 router.get("/:id", async (req, res) => {
   try {
-    const { firstName, lastName, email } = await User.findOne({
-      where: { userId: req.params.id },
-    });
+    const { firstName, lastName, email } = User.findByPk(req.params.id);
 
     const response = { firstName, lastName, email };
 
