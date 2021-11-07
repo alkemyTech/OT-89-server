@@ -102,7 +102,7 @@ router.get('/me', isAuthenticated, async (req, res) => {
         const data = await User.findByPk(userId)        
         if(data.dataValues !== undefined && data.dataValues !== null) {
             const { firstName, lastName, email } = data.dataValues
-            res.status(203).json({
+            res.status(200).json({
                 message: "Datos del user",
                 data: {
                     firstName,
