@@ -1,6 +1,9 @@
 "use strict";
 module.exports = {
     up: async (queryInterface, Sequelize) => {
+        console.log(
+            "@/migrations/create-slide.js \nWARNING: Organization model reference has been disabled untill it has been incorporated to the project"
+        );
         await queryInterface.createTable("Slides", {
             slideId: {
                 type: Sequelize.INTEGER,
@@ -22,15 +25,13 @@ module.exports = {
             },
             organizationId: {
                 type: Sequelize.INTEGER, //TODO: assuming an Auto Increment id
-                allowNull: false,
-                references: { model: Organization, key: "organizationId" }, //TODO: check that it is so
+                //references: { model: "Organization", key: "organizationId" }, //TODO: silenced till it is created
                 onUpdate: "CASCADE",
                 onDelete: "SET NULL",
             },
             filterId: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
-                references: { model: SlideFilter, key: "filterId" },
+                references: { model: "SlideFilters", key: "filterId" },
                 onUpdate: "CASCADE",
                 onDelete: "SET NULL",
             },
