@@ -93,4 +93,34 @@ router.post("/register",
         }
 })
 
+
+router.get('/me', isAuthenticated, async (req, res) => { 
+
+    const { userId } = req.user.token
+
+    try {
+        const data = await User.findByPk(userId)        
+        if(data.dataValues !== undefined && data.dataValues !== null) {
+            const { firstName, lastName, email } = data.dataValues
+            res.status(200).json({
+                message: "Datos del user",
+                data: {
+                    firstName,
+                    lastName, 
+                    email
+                } 
+            })    
+        } else {
+            res.status(204).json({
+                message: "No hay datos"
+            })
+        }
+
+    } catch (error) {
+        res.status(404).json({message: error})        
+    }
+    
+
+})
+
 module.exports = router
