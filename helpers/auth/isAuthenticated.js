@@ -1,4 +1,4 @@
-export const IsAuthenticated = (req, res, next) => {
+const IsAuthenticated = (req, res, next) => {
     const token = req.headers['Authorization']
     if (!token) {
         res.status(401).send({
@@ -18,3 +18,5 @@ export const IsAuthenticated = (req, res, next) => {
         }
     })
 }
+
+module.exports = IsAuthenticated;

@@ -4,7 +4,8 @@ const db = require('../models/index')
 const User = db.sequelize.models.User;
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
-const { CompareHash } = require('../helpers/auth/hash')
+const { CompareHash } = require('../helpers/auth/hash');
+const IsAuthenticated = require('../helpers/auth/isAuthenticated');
 
 
 router.post('/login',
@@ -40,7 +41,7 @@ router.post('/login',
     }
 );
 
-router.get('/me', isAuthenticated, async (req, res) => {
+router.get('/me', IsAuthenticated, async (req, res) => {
 
     const { userId } = req.user.token
 
