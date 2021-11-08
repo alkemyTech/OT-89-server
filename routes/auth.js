@@ -4,8 +4,9 @@ const db = require('../models/index')
 const User = db.sequelize.models.User;
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
-const { CompareHash } = require('../helpers/auth/hash');
+const { CompareHash, Hash } = require('../helpers/auth/hash');
 const IsAuthenticated = require('../helpers/auth/isAuthenticated');
+const generateToken = require('../helpers/auth/generateToken');
 
 
 router.post('/login',
@@ -33,9 +34,7 @@ router.post('/login',
                     message: "{ok:false}"
                 })
             }
-            const token = jwt.sign({ email: user.email, firstName: user.firstName, lastName: user.lastName, roleId: user.roleId }, process.env.SECRET, {
-                expiresIn: 60 * 60 * 24 * 30 // expira en 30 dias
-            })
+            const token = await generateToken(user)
             res.send({ message: "Login Successful.", token })
         }
     }
@@ -59,21 +58,21 @@ router.post("/register",
         .isEmail()
         .normalizeEmail()
         .withMessage("Insert a valid email")
-        .custom(email => {
-            // We validate the if the email is already in use
-            return User.findOne({
-                where: {
-                    email
-                }
-            })
-                .then(user => {
-                    if (user.email === email) {
-                        return Promise.reject('E-mail already in use' + email);
-                    } else {
-                        return true
-                    }
-                });
-        }),
+     .custom(email => {
+         // We validate the if the email is already in use
+         return User.findOne({
+             where: {
+                 email
+             }
+         })
+             .then(user => {
+                 if (user.email === email) {
+                     return Promise.reject('E-mail already in use' + email);
+                 } else {
+                     return true
+                 }
+             });
+     }),
     // Validate password > 6 characters
     body("password")
         .isLength({ min: 6 })
@@ -100,16 +99,11 @@ router.post("/register",
                     fields: ["email", "password", "firstName", "lastName"]
                 })
                 if (userCreation) {
-                    const { userId } = await userCreation
+                    const data = await userCreation
                     // we generate the token for the authentication
-                    const token = await generateToken(userId)
+                    const token = await generateToken(data)
                     res.json({
                         message: "¡User created successfully!",
-                        userData: {
-                            firstName: firstName,
-                            lastName: lastName,
-                            email: email,
-                        },
                         token: token
                     })
                 } else {
@@ -122,26 +116,19 @@ router.post("/register",
     })
 router.get('/me', IsAuthenticated, async (req, res) => {
 
-    const { userId } = req.user.token
+    const { roleId, firstName, lastName, email, userId } = req.user
 
     try {
-        const data = await User.findByPk(userId)
-        if (data.dataValues !== undefined && data.dataValues !== null) {
-            const { firstName, lastName, email } = data.dataValues
-            res.status(200).json({
-                message: "Datos del user",
-                data: {
-                    firstName,
-                    lastName,
-                    email
-                }
-            })
-        } else {
-            res.status(204).json({
-                message: "No hay datos"
-            })
-        }
-
+        res.status(200).json({
+            message: "Datos del user",
+            data: {
+                userId,
+                firstName,
+                lastName,
+                email,
+                roleId
+            }
+        })
     } catch (error) {
         res.status(404).json({ message: error })
     }
