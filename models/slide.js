@@ -2,7 +2,6 @@
 // const { Model } = require("sequelize");
 // const { stringValidation } = require("../helpers/validation/modelValidation");
 
-<<<<<<< HEAD
 //SLIDE MODEL
 module.exports = (sequelize, DataTypes) => {
     class Slide extends Model {
@@ -82,7 +81,6 @@ module.exports = (sequelize, DataTypes) => {
     );
     return Slide;
 };
-=======
 // //SLIDE MODEL
 // module.exports = (sequelize, DataTypes) => {
 //     class Slide extends Model {
@@ -160,4 +158,3 @@ module.exports = (sequelize, DataTypes) => {
 //     );
 //     return Slide;
 // };
->>>>>>> login
