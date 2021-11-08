@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "SET NULL",
     },
     type: DataTypes.STRING,
-    deleteAt: DataTypes.DATE,  
+    deletedAt: DataTypes.DATE,  
   }, {
     sequelize,
     modelName: 'Entry',
