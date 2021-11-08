@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const db = require('../models/index')
+const { CompareHash  } = require('../helpers/auth/hash')
 const {validateLogin} = require('../auth/expressValidator');
 const {login}= require('../servises/login');
 const { body, validationResult } = require('express-validator')
@@ -10,7 +12,35 @@ const generateToken = require('../helpers/auth/generateToken')
 // db click
 const User = db.sequelize.models.User
 
-router.post('/login',validateLogin,(req, res) => {login});
+router.post('/login',  
+body("email")
+.isEmail()
+.normalizeEmail()
+.withMessage("Insert a valid email"),
+body("password")
+.isLength({ min: 6 })
+.withMessage("Password length must be at least 6 characters"),
+async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.json({
+            error: errors.array()
+        })
+    } else {
+        const { email, password } = req.body
+        const user = await User.findOne({
+            where: { email: email },
+          });
+          const isMatch = user && (await CompareHash (password, user.password));
+          if (!isMatch) {
+            res.json({
+                message: "{ok:false}"
+            })
+          }
+          return {user}
+    }
+}   
+);
 
 router.post("/register", 
     // Validate firstName
@@ -124,3 +154,4 @@ router.get('/me', isAuthenticated, async (req, res) => {
 })
 
 module.exports = router
+

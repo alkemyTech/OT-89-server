@@ -2,6 +2,7 @@
 const { Model } = require("sequelize");
 const { stringValidation } = require("../helpers/validation/modelValidation");
 
+
 //SLIDE MODEL
 module.exports = (sequelize, DataTypes) => {
     class Slide extends Model {
@@ -81,3 +82,4 @@ module.exports = (sequelize, DataTypes) => {
     );
     return Slide;
 };
+
