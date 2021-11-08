@@ -39,6 +39,7 @@ router.post('/login',
         }
     }
 );
+
 router.post("/register",
     // Validate firstName
     body("firstName")
@@ -64,14 +65,13 @@ router.post("/register",
              where: {
                  email
              }
-         })
-             .then(user => {
-                 if (user.email === email) {
-                     return Promise.reject('E-mail already in use' + email);
-                 } else {
-                     return true
-                 }
-             });
+         }).then(user => {
+                if (user) {
+                    return Promise.reject('E-mail already in use' + email);
+                } else {
+                    return true
+                }
+            });
      }),
     // Validate password > 6 characters
     body("password")
@@ -95,7 +95,6 @@ router.post("/register",
                     lastName: lastName
                 }, {
                     validation: true,
-                    silent: true, // this set updateAt null
                     fields: ["email", "password", "firstName", "lastName"]
                 })
                 if (userCreation) {
@@ -114,6 +113,7 @@ router.post("/register",
             }
         }
     })
+
 router.get('/me', IsAuthenticated, async (req, res) => {
 
     const { roleId, firstName, lastName, email, userId } = req.user

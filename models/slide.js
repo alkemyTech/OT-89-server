@@ -1,6 +1,6 @@
 // ("use strict");
-// const { Model } = require("sequelize");
-// const { stringValidation } = require("../helpers/validation/modelValidation");
+const { Model } = require("sequelize");
+const { stringValidation } = require("../helpers/validation/modelValidation");
 
 //SLIDE MODEL
 module.exports = (sequelize, DataTypes) => {
