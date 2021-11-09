@@ -100,7 +100,7 @@ router.post("/register",
                 if (userCreation) {
                     const data = await userCreation
                     // we generate the token for the authentication
-                    const token = await generateToken(data)
+                    const token = generateToken(data)
                     res.json({
                         message: "¡User created successfully!",
                         token: token
