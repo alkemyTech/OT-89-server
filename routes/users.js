@@ -3,26 +3,22 @@ const router = express.Router();
 const db = require("../models/index");
 const User = db.sequelize.models.User;
 const IsAuthenticated = require("../helpers/auth/isAuthenticated");
+const IsAdmin = require("../helpers/auth/isAdmin");
 
 //importar middleware de autenticacion
 
 /////////////////////////////////////////////////////////////////////GET
 
-router.get("/", IsAuthenticated, async (req, res) => {
-  const { roleId } = await req.user
-  if (roleId === "admin") {
-    try {
-      const dataUsers = await User.findAll();
-      res.status(200).json({ 
-        message: "Estos son los usuarios de la base de datos",
-        data: dataUsers
-      })
-    }
-    catch (error) {
-      res.json({ error: error })
-    }
-  } else {
-    res.status(403).json({ message: "No está autorizado"})
+router.get("/", IsAuthenticated, IsAdmin, async (req, res) => {
+  try {
+    const dataUsers = await User.findAll();
+    res.status(200).json({ 
+      message: "Estos son los usuarios de la base de datos",
+      data: dataUsers
+    })
+  }
+  catch (error) {
+    res.json({ error: error })
   }
 })
 
