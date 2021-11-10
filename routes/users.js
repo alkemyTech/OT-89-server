@@ -7,7 +7,7 @@ const IsAuthenticated = require('../helpers/auth/isAuthenticated')
 const router = express.Router();
 /////////////////////////////////////////////////////////////////////GET
 
-router.get("/:id", IsAuthenticated, async (req, res) => {
+router.get("/:id", IsAuthenticated, async (req, res) => { // agregar el IsAdmin para que no se hookeen 
   try {
     const { firstName, lastName, email } = await User.findByPk(req.params.id);
 
@@ -23,21 +23,34 @@ router.get("/:id", IsAuthenticated, async (req, res) => {
 
 router.put("/:id", IsAuthenticated, async (req, res) => {
   try {
-    if(req.user.userId === req.params.id || req.user.roleId === 1) {
-      const response = await User.update(
-        {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-        },
-        {
-          where: { userId: req.params.id }, 
-        }
-      );
-      {response === 1 
-      ? res.json({data: req.body })
-      : res.json({ response: response})
+    if(req.user.userId == req.params.id || req.user.roleId === 1) {
+      if(req.user.roleId === 1){
+        const response = await User.update(
+          {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            roleId: req.body.roleId
+          },
+          {
+            where: { userId: req.params.id}, 
+          });
+          response ? res.json({data: req.body }) : res.json({ response }) 
+      } else {
+        const response = await User.update(
+          {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email
+          },
+          {
+            where: { userId: req.params.id }, 
+          }
+        )
+        response ? res.json({data: req.body }) : res.json({ response })
       }
+    } else {
+      res.status(403).json({ message: "You are not allowed to be here!" })
     }
   } catch (e) {
     res.status(400).json({ message: e.message});
