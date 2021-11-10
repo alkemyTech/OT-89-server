@@ -56,4 +56,29 @@ const NewsById = async (req, res, next) => {
     }
 };
 
-module.exports = { NewsList, NewsById };
+//@ROUTE /news
+const News=async(req,res,next)=>{
+  try {
+    const {name,image,content}=req.body
+
+    if(!name || !image || !content ){
+      res.satus(400).json({message:"Todos los campos deben ser completados"})
+    }else{
+      const news= await Entry.create(
+        {name,image,content,type:"news"},
+        {
+        attributes: ["name", "image","content","type"],
+        validation:true,
+
+      })
+      res.status(201).json({message:"Ok!",data:news})
+    }
+
+
+  } catch (err) {
+    next(err);
+
+  }
+}
+
+module.exports = { NewsList, NewsById,News,NewsUpdate,NewsDelete };
