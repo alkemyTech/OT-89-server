@@ -1,48 +1,53 @@
 const express = require("express");
-const router = express.Router();
 const db = require("../models/index");
 const User = db.sequelize.models.User;
+const IsAuthenticated = require('../helpers/auth/isAuthenticated')
+// const { IsAdmin } = require('../helpers/auth/isAdmin')
 
-//importar middleware de autenticacion
-
+const router = express.Router();
 /////////////////////////////////////////////////////////////////////GET
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", IsAuthenticated, async (req, res) => {
   try {
-    const { firstName, lastName, email } = User.findByPk(req.params.id);
+    const { firstName, lastName, email } = await User.findByPk(req.params.id);
 
     const response = { firstName, lastName, email };
 
-    res.send(response);
+    res.json({data: response});
   } catch (e) {
-    res.status(404).send({ message: e.message });
+    res.status(404).json({ message: e.message });
   }
 });
 
 /////////////////////////////////////////////////////////////////////PUT
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", IsAuthenticated, async (req, res) => {
   try {
-    const response = await User.update(
-      {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-      },
-      {
-        where: { userId: req.params.id },
+    if(req.user.userId === req.params.id || req.user.roleId === 1) {
+      const response = await User.update(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+        },
+        {
+          where: { userId: req.params.id }, 
+        }
+      );
+      {response === 1 
+      ? res.json({data: req.body })
+      : res.json({ response: response})
       }
-    );
-    res.send(response);
+    }
   } catch (e) {
-    res.status(400).send({ message: e.message });
+    res.status(400).json({ message: e.message});
   }
 });
 
 /////////////////////////////////////////////////////////////////////DELETE
 //Borrado logico, paranoid configurado en models
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", IsAuthenticated, async (req, res) => {
   try {
     let query = await User.findByPk(req.params.id);
 
@@ -53,9 +58,9 @@ router.delete("/:id", async (req, res) => {
     const response = await User.destroy({
       where: { userId: req.params.id },
     });
-    res.send(response);
+    res.json(response);
   } catch (e) {
-    res.status(404).send({ message: e.message });
+    res.status(404).json({ message: e.message });
   }
 });
 
