@@ -1,5 +1,5 @@
 const express = require("express");
-const { NewsList, NewsById,News,NewsUpdate, NewsDelete } = require("../controllers/NewsController");
+const { NewsList, NewsById,News} = require("../controllers/NewsController");
 
 const router = express.Router();
 

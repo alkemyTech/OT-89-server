@@ -81,4 +81,4 @@ const News=async(req,res,next)=>{
   }
 }
 
-module.exports = { NewsList, NewsById,News,NewsUpdate,NewsDelete };
+module.exports = { NewsList, NewsById,News };
