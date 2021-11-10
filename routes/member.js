@@ -4,12 +4,13 @@ const {
   MembersList,
   UpdateMember,
 } = require("../controllers/MembersController");
+const { nameValidation } = require("../helpers/validation/membersValidation");
 
 const router = express.Router();
 
 //@DESC
 //@ROUTE /members
-//router.route("/").post(validation, CreateMember);
+router.route("/").post(nameValidation, CreateMember);
 
 //@DESC
 //@ROUTE /members

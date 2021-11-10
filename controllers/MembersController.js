@@ -8,6 +8,27 @@ const Member = db.sequelize.models.Member;
 //@METHOD POST
 const CreateMember = async (req, res, next) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({
+        error: errors.array(),
+      });
+    }
+
+    const { name } = req.body;
+    const createMember = await Member.create(
+      { name: name },
+      {
+        validation: true,
+        fields: ["name"],
+      }
+    );
+
+    if (!createMember) {
+      throw new Error("Member creation unsuccessful");
+    }
+
+    res.status().json({ message: "Ok!", data: createMember });
   } catch (err) {
     next(err);
   }
