@@ -13,6 +13,7 @@ const CreateMember = async (req, res, next) => {
       res.status(400).json({
         error: errors.array(),
       });
+      return;
     }
 
     const { name } = req.body;
@@ -28,7 +29,7 @@ const CreateMember = async (req, res, next) => {
       throw new Error("Member creation did not go as expected");
     }
 
-    res.status().json({ message: "Ok!", data: newMember });
+    res.status(201).json({ message: "Ok!", data: newMember });
   } catch (err) {
     next(err);
   }
