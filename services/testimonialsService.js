@@ -26,7 +26,7 @@ const update = async (id, dataBody) => {
 
 const deleteOperation = async (id)=>{
     
-    const deleteOpertion = await balanceModel.destroy({
+    const deleteOpertion = await testimonials.destroy({
       where: {
         id: id,
 
