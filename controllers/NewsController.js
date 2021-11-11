@@ -67,7 +67,7 @@ const News=async(req,res,next)=>{
       const news= await Entry.create(
         {name,image,content,category,type:"news"},
         {
-        attributes: ["name", "image","content","type"],
+        attributes: ["name", "image","content","categoryId","type"],
         validation:true,
 
       })
