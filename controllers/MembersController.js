@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const { validationResult } = require("express-validator");
+const { isEmpty } = require("lodash");
 
 const Member = db.sequelize.models.Member;
 
@@ -29,26 +30,40 @@ const MembersList = async (req, res, next) => {
 const UpdateMember = async (req, res, next) => {
   try {
     const { name, imageUrl } = req.body;
-    const mermberId = req.params.id;
-
-    const memberExist = await Member.findByPk(mermberId);
-    if (!memberExist) {
-      err.status(404).json({ message: "Member id doesn't exist" });
-      return;
-    }
+    const memberId = req.params.id;
 
     const payload = {};
     if (name) payload.name = name;
     if (imageUrl) payload.imageUrl = imageUrl;
 
-    const updatedMember = await Member.update(payload, {
-      //[rowsUpdate, [updatedMember]]
+    if (isEmpty(payload)) {
+      res
+        .status(400)
+        .json({
+          message:
+            "Either a name or imageUrl is required to perform an update!",
+        });
+      return;
+    }
+
+    const memberExist = await Member.findByPk(memberId);
+
+    if (!memberExist) {
+      console.log(memberExist);
+      res.status(404).json({ message: "Member doesn't exist" });
+      return;
+    }
+
+    const [updatedMember] = await Member.update(payload, {
       where: { id: memberId },
-      //returning: true,
       validate: true,
     });
 
-    res.json(200).json({ message: "Ok!", data: updatedMember });
+    if (updatedMember) {
+      res.status(204).send();
+    } else {
+      throw new Error("Ups! Something went wrong");
+    }
   } catch (err) {
     next(err);
   }
