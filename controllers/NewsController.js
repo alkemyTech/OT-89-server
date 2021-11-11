@@ -66,7 +66,7 @@ const NewsDelete=async(req,res,next)=>{
     const  newsDelete= await Entry.destroy({
         where:{id:id}
     })
-    res.send(newsDelete)
+    res.status(200).json({message:"Eliminado con exito",data: newsDelete})
     }
 
   } catch (err) {
