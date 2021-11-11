@@ -67,6 +67,7 @@ const NewsUpdate=async(req,res,next)=>{
       name:req.body.name,
       image:req.body.image,
       content:req.body.image,
+      categoryId:body.category,
       type:req.body.type
     },
     {
