@@ -59,13 +59,13 @@ const NewsById = async (req, res, next) => {
 //@ROUTE /news
 const News=async(req,res,next)=>{
   try {
-    const {name,image,content,category}=req.body
+    const {name,image,content,categoryId}=req.body
 
-    if(!name || !image || !content || category ){
+    if(!name || !image || !content || categoryId ){
       res.satus(400).json({message:"Todos los campos deben ser completados"})
     }else{
       const news= await Entry.create(
-        {name,image,content,category,type:"news"},
+        {name,image,content,categoryId,type:"news"},
         {
         attributes: ["name", "image","content","categoryId","type"],
         validation:true,
