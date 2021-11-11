@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 
 const Member = db.sequelize.models.Member;
 
-//@DESC create a new member
+//@DESC create a new member for the organization
 //@ROUTE /members
 //@METHOD POST
 const CreateMember = async (req, res, next) => {
@@ -16,7 +16,7 @@ const CreateMember = async (req, res, next) => {
     }
 
     const { name } = req.body;
-    const createMember = await Member.create(
+    const newMember = await Member.create(
       { name: name },
       {
         validation: true,
@@ -24,11 +24,11 @@ const CreateMember = async (req, res, next) => {
       }
     );
 
-    if (!createMember) {
-      throw new Error("Member creation unsuccessful");
+    if (!newMember) {
+      throw new Error("Member creation did not go as expected");
     }
 
-    res.status().json({ message: "Ok!", data: createMember });
+    res.status().json({ message: "Ok!", data: newMember });
   } catch (err) {
     next(err);
   }

@@ -8,7 +8,7 @@ const { nameValidation } = require("../helpers/validation/membersValidation");
 
 const router = express.Router();
 
-//@DESC
+//@DESC create a new member for the organization
 //@ROUTE /members
 router.route("/").post(nameValidation, CreateMember);
 
