@@ -8,6 +8,30 @@ const updateOperation = async (req, res) => {
   res.status(201).json("Operation Modified");
 };
 
+
+
+
+const deleteOperation = async (req,res) => {
+    const id = req.params.id;
+    
+    const deleteOpertion = await balanceServices.deleteOperation(id)
+    
+    if(deleteOpertion==1){
+      res.status(200).json("Testimonial Deleted")
+    }else{
+      res.status(400).json("Testimonial dont exist")
+    }
+
+  }
+
+
+
+
+
+
+
+
 module.exports = {
   updateOperation,
+  deleteOperation
 };

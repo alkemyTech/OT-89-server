@@ -20,6 +20,23 @@ const update = async (id, dataBody) => {
   res.status(201).json({ message: "fue modificado, Nuevos datos:" + data });
 };
 
-module.exports = {
-  update,
-};
+
+
+
+
+const deleteOperation = async (id)=>{
+    
+    const deleteOpertion = await balanceModel.destroy({
+      where: {
+        id: id,
+
+      }
+    });
+    return deleteOpertion;
+
+  };
+
+  module.exports = {
+    update,
+    deleteOperation
+  };
