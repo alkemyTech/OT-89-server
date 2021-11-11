@@ -11,9 +11,9 @@ const router = express.Router();
 //@ROUTE /members
 //router.route("/").post(validation, CreateMember);
 
-//@DESC
+//@DESC retrieve a list of all members of the organization
 //@ROUTE /members
-//router.route("/").get(validation, MembersList);
+router.route("/").get(MembersList);
 
 //@DESC
 //@ROUTE /members/:id
