@@ -56,4 +56,33 @@ const NewsById = async (req, res, next) => {
     }
 };
 
-module.exports = { NewsList, NewsById };
+const NewsUpdate=async(req,res,next)=>{
+  try {
+    const id=req.params.id
+    const news = await Entry.findOne({ where: { type: "news", id: id } });
+    if(!news){
+        res.status(404).json({message:"No existe el id"})
+    }else{
+    const update= await Entry.update({
+      name:req.body.name,
+      image:req.body.image,
+      content:req.body.image,
+      type:req.body.type
+    },
+    {
+      where:{
+        id:id
+      },
+      validation:true
+    })
+    res.send(update)
+    }
+
+  } catch (err) {
+    console.log(err)
+
+  }
+
+}
+
+module.exports = { NewsList, NewsById, NewsUpdate };
