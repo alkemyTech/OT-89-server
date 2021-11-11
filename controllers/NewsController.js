@@ -76,7 +76,8 @@ const NewsUpdate=async(req,res,next)=>{
       },
       validation:true
     })
-    res.send(update).json({message:"actualizo de forma correcta"})
+    res.status(200).json({message:"Actualizado de forma correcta",data:update});
+
     }
 
   } catch (err) {
