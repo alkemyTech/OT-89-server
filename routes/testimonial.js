@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const routeController = require("../common/routeController");
-const testimonialsController = require('../models/Testimonials');
+const testimonialsController = require('../controllers/testimonialsControllers');
 const IsAuthenticated = require("../helpers/auth/isAuthenticated");
 const IsAdmin = require("../helpers/auth/isAdmin");
 
