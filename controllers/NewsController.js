@@ -61,7 +61,7 @@ const News=async(req,res,next)=>{
   try {
     const {name,image,content,categoryId}=req.body
 
-    if(!name || !image || !content || categoryId ){
+    if(!name || !image || !content || !categoryId ){
       res.satus(400).json({message:"Todos los campos deben ser completados"})
     }else{
       const news= await Entry.create(
