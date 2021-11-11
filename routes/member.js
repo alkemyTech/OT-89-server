@@ -15,8 +15,8 @@ const router = express.Router();
 //@ROUTE /members
 //router.route("/").get(validation, MembersList);
 
-//@DESC
+//@DESC update a member's information
 //@ROUTE /members/:id
-//router.route("/").put(validation, UpdateMember);
+router.route("/").put(UpdateMember);
 
 module.exports = router;
