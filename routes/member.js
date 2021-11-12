@@ -4,6 +4,7 @@ const {
   MembersList,
   UpdateMember,
 } = require("../controllers/MembersController");
+const IsAuthenticated = require("../helpers/auth/isAuthenticated");
 
 const router = express.Router();
 
@@ -17,6 +18,6 @@ const router = express.Router();
 
 //@DESC update a member's information
 //@ROUTE /members/:id
-router.route("/").put(UpdateMember);
+router.route("/").put(IsAuthenticated, UpdateMember);
 
 module.exports = router;
