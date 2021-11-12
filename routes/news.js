@@ -11,7 +11,7 @@ router.route("/").get(NewsList);
 //@ROUTE /news/:id
 router.route("/:id").get(NewsById);
 
-//PUT
+//@METHOD PUT
 //@ROUTE /news/:id
 router.route("/news/:id").put(NewsUpdate)
 
