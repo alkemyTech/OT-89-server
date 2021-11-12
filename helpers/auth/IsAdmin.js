@@ -6,3 +6,5 @@ const IsAdmin = (req, res, next) => {
   }
   next();
 };
+
+module.exports = IsAdmin;
