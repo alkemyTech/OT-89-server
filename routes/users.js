@@ -3,14 +3,29 @@ const db = require("../models/index");
 const User = db.sequelize.models.User;
 const IsAuthenticated = require('../helpers/auth/isAuthenticated');
 const generateToken = require("../helpers/auth/generateToken");
-// const { IsAdmin } = require('../helpers/auth/isAdmin')
+const { IsAdmin } = require('../helpers/auth/isAdmin')
+
 
 const router = express.Router();
 /////////////////////////////////////////////////////////////////////GET
 
-router.get("/:id", IsAuthenticated, async (req, res) => { // agregar el IsAdmin para que no se hookeen 
+router.get("/", IsAuthenticated, IsAdmin, async (req, res) => {
   try {
-    const { firstName, lastName, email, roleId } = await User.findByPk(req.params.id);
+    const dataUsers = await User.findAll();
+    res.status(200).json({ 
+      message: "Estos son los usuarios de la base de datos",
+      data: dataUsers
+    })
+  }
+  catch (error) {
+    res.json({ error: error })
+  }
+})
+
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { firstName, lastName, email } = await User.findByPk(req.params.id);
 
     const response = { firstName, lastName, email, roleId };
 
