@@ -4,6 +4,8 @@ const {
   MembersList,
   UpdateMember,
 } = require("../controllers/MembersController");
+const IsAuthenticated = require("../helpers/auth/isAuthenticated");
+const IsAdmin = require("../helpers/auth/isAdmin");
 
 const router = express.Router();
 
@@ -13,7 +15,7 @@ const router = express.Router();
 
 //@DESC retrieve a list of all members of the organization
 //@ROUTE /members
-router.route("/").get(MembersList);
+router.route("/").get(IsAuthenticated, IsAdmin, MembersList);
 
 //@DESC
 //@ROUTE /members/:id
