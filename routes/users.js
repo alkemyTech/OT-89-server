@@ -1,7 +1,8 @@
 const express = require("express");
 const db = require("../models/index");
 const User = db.sequelize.models.User;
-const IsAuthenticated = require('../helpers/auth/isAuthenticated')
+const IsAuthenticated = require('../helpers/auth/isAuthenticated');
+const generateToken = require("../helpers/auth/generateToken");
 // const { IsAdmin } = require('../helpers/auth/isAdmin')
 
 const router = express.Router();
@@ -9,9 +10,9 @@ const router = express.Router();
 
 router.get("/:id", IsAuthenticated, async (req, res) => { // agregar el IsAdmin para que no se hookeen 
   try {
-    const { firstName, lastName, email } = await User.findByPk(req.params.id);
+    const { firstName, lastName, email, roleId } = await User.findByPk(req.params.id);
 
-    const response = { firstName, lastName, email };
+    const response = { firstName, lastName, email, roleId };
 
     res.json({data: response});
   } catch (e) {
@@ -35,7 +36,15 @@ router.put("/:id", IsAuthenticated, async (req, res) => {
           {
             where: { userId: req.params.id}, 
           });
-          response ? res.json({data: req.body }) : res.json({ response }) 
+          if(response){
+            const token = generateToken(req.body)
+            res.json({
+              message: "Profile updated",
+              token: token
+            })
+        } else {
+          res.json({ response })
+        }
       } else {
         const response = await User.update(
           {
@@ -47,7 +56,15 @@ router.put("/:id", IsAuthenticated, async (req, res) => {
             where: { userId: req.params.id }, 
           }
         )
-        response ? res.json({data: req.body }) : res.json({ response })
+        if(response){
+            const token = generateToken(req.body)
+            res.json({
+              message: "Profile updated",
+              token: token
+            })
+        } else {
+          res.json({ response })
+        }
       }
     } else {
       res.status(403).json({ message: "You are not allowed to be here!" })
