@@ -3,7 +3,7 @@ const testimonials = require("../models/testimonials");
 const update = async (id, dataBody) => {
   const data = {
     name: dataBody.name,
-    image: decode.image,
+    image: dataBody.image,
     content: dataBody.content,
   };
   const byEntry = await getByentryId(id);
