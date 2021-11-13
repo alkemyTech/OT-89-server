@@ -10,8 +10,8 @@ router.put("/testimonials/:id",IsAuthenticated, IsAdmin, (req, res,)=> {
     routeController.handleRequest(req, res, testimonialsController.updateOperation);
   });
 
+  router.delete("/testimonials/:id",IsAuthenticated, IsAdmin, (req, res,)=> {
 
-  router.delete("/testimonials/delete/:id",IsAuthenticated, IsAdmin, (req, res,)=> {
     routeController.handleRequest(req, res, testimonialsController.deleteOperation);
   });
 
