@@ -21,8 +21,9 @@ router.route("/").post(IsAuthenticated, nameValidation, CreateMember);
 router.route("/").get(IsAuthenticated, IsAdmin, MembersList);
 
 
-//@DESC
+//@DESC update a member's information
 //@ROUTE /members/:id
-//router.route("/").put(validation, UpdateMember);
+router.route("/").put(IsAuthenticated, UpdateMember);
+
 
 module.exports = router;

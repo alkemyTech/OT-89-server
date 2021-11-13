@@ -37,7 +37,6 @@ const CreateMember = async (req, res, next) => {
   }
 };
 
-
 //@DESC retrieve a list of all members of the organization
 //@ROUTE /members
 //@METHOD GET
@@ -62,6 +61,41 @@ const MembersList = async (req, res, next) => {
 //@METHOD PUT
 const UpdateMember = async (req, res, next) => {
   try {
+    const { name, imageUrl } = req.body;
+    const memberId = req.params.id;
+
+    const payload = {};
+    if (name) payload.name = name;
+    if (imageUrl) payload.imageUrl = imageUrl;
+
+    if (isEmpty(payload)) {
+      res
+        .status(400)
+        .json({
+          message:
+            "Either a name or imageUrl is required to perform an update!",
+        });
+      return;
+    }
+
+    const memberExist = await Member.findByPk(memberId);
+
+    if (!memberExist) {
+      console.log(memberExist);
+      res.status(404).json({ message: "Member doesn't exist" });
+      return;
+    }
+
+    const [updatedMember] = await Member.update(payload, {
+      where: { id: memberId },
+      validate: true,
+    });
+
+    if (updatedMember) {
+      res.status(204).send();
+    } else {
+      throw new Error("Ups! Something went wrong");
+    }
   } catch (err) {
     next(err);
   }
