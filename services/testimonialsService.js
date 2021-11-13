@@ -17,7 +17,7 @@ const update = async (id, dataBody) => {
   } catch (e) {
     res.status(404).json({ message: "Cant make this request" });
   }
-  res.status(201).json({ message: "fue modificado, Nuevos datos:" + data });
+  
 };
 
 
