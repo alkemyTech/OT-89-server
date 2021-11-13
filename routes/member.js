@@ -5,7 +5,9 @@ const {
   UpdateMember,
 } = require("../controllers/MembersController");
 const IsAuthenticated = require("../helpers/auth/isAuthenticated");
+const IsAdmin = require("../helpers/auth/isAdmin");
 const { nameValidation } = require("../helpers/validation/membersValidation");
+
 
 const router = express.Router();
 
@@ -13,9 +15,11 @@ const router = express.Router();
 //@ROUTE /members
 router.route("/").post(IsAuthenticated, nameValidation, CreateMember);
 
-//@DESC
+
+//@DESC retrieve a list of all members of the organization
 //@ROUTE /members
-//router.route("/").get(validation, MembersList);
+router.route("/").get(IsAuthenticated, IsAdmin, MembersList);
+
 
 //@DESC
 //@ROUTE /members/:id

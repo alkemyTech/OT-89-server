@@ -1,5 +1,7 @@
 const db = require("../models/index");
 const { validationResult } = require("express-validator");
+const { isEmpty } = require("lodash");
+
 
 const Member = db.sequelize.models.Member;
 
@@ -35,11 +37,21 @@ const CreateMember = async (req, res, next) => {
   }
 };
 
-//@DESC retrieve a list of all members
+
+//@DESC retrieve a list of all members of the organization
 //@ROUTE /members
 //@METHOD GET
 const MembersList = async (req, res, next) => {
   try {
+    const membersList = await Member.findAll();
+
+    if (!membersList) {
+      throw new Error("Ups! Something went wrong");
+    } else if (isEmpty(membersList)) {
+      res.status(204).send();
+    } else {
+      res.status(200).json({ message: "Ok!", data: membersList });
+    }
   } catch (err) {
     next(err);
   }
