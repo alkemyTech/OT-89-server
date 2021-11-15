@@ -94,7 +94,7 @@ router.put("/:id", IsAuthenticated, async (req, res) => {
 
 router.delete("/:id", IsAuthenticated, async (req, res) => {
   try {
-    if (req.params.id === req.user.userId || req.user.roleId === 1) {
+    if (req.params.id == req.user.userId || req.user.roleId === 1) {
       let query = await User.findByPk(req.params.id);
       if (!query) {
         //Si no encuentra el usuario no existe
@@ -105,6 +105,8 @@ router.delete("/:id", IsAuthenticated, async (req, res) => {
         });
         res.json(response);
       }
+    }else {
+      res.status(403).json({ message: "No tienes permiso de estar por aqui!" })
     }
   } catch (e) {
     res.status(404).json({ message: e.message });

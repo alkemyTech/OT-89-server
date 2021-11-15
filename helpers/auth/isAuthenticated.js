@@ -7,18 +7,20 @@ const IsAuthenticated = (req, res, next) => {
             ok: false,
             message: 'Token Invalido'
         })
+    } else {
+
+        jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, data) {
+            if (err) {
+                return res.status(401).send({
+                    ok: false,
+                    message: 'Token Invalido'
+                });
+            } else {
+                req.user = data
+                next()
+            }
+        })
     }
-    jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, data) {
-        if (err) {
-            return res.status(401).send({
-                ok: false,
-                message: 'Token Invalido'
-            });
-        } else {
-            req.user = data
-            next()
-        }
-    })
 }
 
 module.exports = IsAuthenticated;
