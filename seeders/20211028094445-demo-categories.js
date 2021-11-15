@@ -6,13 +6,12 @@ module.exports = {
       {
         name: "prueba",
         description: "pruebapruebaprueba",
-        email: "example@example.com",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     ]);
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("Categories", null, {});
+    return queryInterface.bulkDelete("Categories", {name:"prueba", description: "pruebapruebaprueba"});
   },
 };

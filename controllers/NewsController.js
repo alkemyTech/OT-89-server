@@ -115,8 +115,23 @@ const NewsUpdate = async (req, res, next) => {
           data: update
         });
       }
+    }} catch (err) {
+      console.log(err)
 
+    }
+  }
 
+const NewsDelete=async(req,res,next)=>{
+  try {
+    const id=req.params.id
+    const news = await Entry.findOne({ where: { type: "news", id: id } });
+    if(!news){
+        res.status(404).json({message:"No existe el id buscado"})
+    }else{
+    const  newsDelete= await Entry.destroy({
+        where:{id:id}
+    })
+    res.status(200).json({message:"Eliminado con exito",data: newsDelete})
     }
 
   } catch (err) {
@@ -129,5 +144,6 @@ const NewsUpdate = async (req, res, next) => {
 module.exports = {
   NewsList,
   NewsById,
-  NewsUpdate
+  NewsUpdate, NewsDelete
 };
+
