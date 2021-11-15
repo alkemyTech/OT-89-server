@@ -1,4 +1,5 @@
-const testimonials = require("../models/testimonials");
+const db = require("../models/index");
+const testimonials = db.sequelize.models.testimonials;
 
 const update = async (id, dataBody) => {
   const data = {
