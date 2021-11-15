@@ -1,5 +1,6 @@
 const express = require("express");
-const { NewsList, NewsById,News} = require("../controllers/NewsController");
+const { NewsList, NewsById,News, NewsDelete} = require("../controllers/NewsController");
+
 
 const router = express.Router();
 
@@ -15,5 +16,8 @@ router.route("/:id").get(NewsById);
 //@ROUTE /news
 router.route("/news").post(News)
 
+//DELETE
+//@ROUTE /news/:id
+router.route("/news/:id").delete(NewsDelete)
 
 module.exports = router;
