@@ -7,7 +7,17 @@ const Categories = db.sequelize.models.Categories;
 //@METHOD GET
 const CategoriesList = async (req, res, next) => {
   try {
+    const CategoriesArray = await Categories.findAll({
+      attributes: ["id", "name"],
+    });
 
+    if (!CategoriesArray) {
+      throw new Error("Unexpected.");
+    } else if (CategoriesArray.length == 0) {
+      res.sendStatus(204);
+    } else {
+      res.status(200).json({ message: "Ok!", data: CategoriesArray });
+    }
   } catch (err) {
     next(err);
   }
