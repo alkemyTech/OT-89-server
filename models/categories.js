@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           is: {
-            args: stringValidation(2, 45),
+            args: stringValidation(2, 45), //Agregue la validacion de string para el name
             msg: "Invalid name",
           },
         },
