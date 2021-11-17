@@ -9,6 +9,6 @@ const router = express.Router();
 //@ROUTE /contacts
 router.route("/").get(IsAuthenticated, IsAdmin, ContactsList);
 
-router.route("/contacts").post(IsAuthenticated, IsAdmin,StoreContact)
+router.route("/").post(IsAuthenticated, IsAdmin,StoreContact)
 
 module.exports = router;
