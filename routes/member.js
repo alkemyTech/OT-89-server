@@ -3,6 +3,7 @@ const {
   CreateMember,
   MembersList,
   UpdateMember,
+  DeleteMember,
 } = require("../controllers/MembersController");
 const IsAuthenticated = require("../helpers/auth/isAuthenticated");
 const IsAdmin = require("../helpers/auth/isAdmin");
@@ -24,6 +25,11 @@ router.route("/").get(IsAuthenticated, IsAdmin, MembersList);
 //@DESC update a member's information
 //@ROUTE /members/:id
 router.route("/").put(IsAuthenticated, UpdateMember);
+
+
+//@DESC delete a member from the organization
+//@ROUTE /members/:id
+router.delete("/:id", IsAuthenticated, IsAdmin, DeleteMember);
 
 
 module.exports = router;
