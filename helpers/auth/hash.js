@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 
+
 const saltRounds = 12
 
 // hashes a new password
