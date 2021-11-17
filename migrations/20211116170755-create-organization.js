@@ -8,26 +8,51 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
+      name: {  
+        type: Sequelize.STRING,
+        allowNull: false,  
       },
-      facebook: {
-        type: Sequelize.STRING
+      image: {  
+        type: Sequelize.STRING ,
+        allowNull: false,
       },
-      linkedin: {
-        type: Sequelize.STRING
+      content: {  
+        type: Sequelize.STRING,
+        allowNull: false,  
       },
-      instagram: {
-        type: Sequelize.STRING
+      phone: {  
+        type: Sequelize.STRING,
+        allowNull: false,  
+      },
+      adress: {  
+        type: Sequelize.STRING,
+        allowNull: false,  
+      },
+      facebook: {  
+        type: Sequelize.STRING,
+        allowNull: true,  
+      },
+      linkedin: {  
+        type: Sequelize.STRING,
+        allowNull: true,  
+      },
+      instagram: {  
+        type: Sequelize.STRING,
+        allowNull: true,  
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        defaultValue: null,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
