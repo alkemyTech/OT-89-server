@@ -8,7 +8,7 @@ const Categories = db.sequelize.models.Categories;
 const CategoriesList = async (req, res, next) => {
   try {
     const CategoriesArray = await Categories.findAll({
-      attributes: ["id", "name"],
+      attributes: ["id", "name", "description"],
     });
 
     if (!CategoriesArray) {
