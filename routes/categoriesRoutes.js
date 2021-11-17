@@ -1,10 +1,10 @@
 const express = require("express");
-// const IsAuthenticated = require('../helpers/auth/isAuthenticated');
-// const IsAdmin = require('../helpers/auth/isAdmin');
+const IsAuthenticated = require('../helpers/auth/isAuthenticated');
+const IsAdmin = require('../helpers/auth/isAdmin');
 const {createCategory} = require("../controllers/CategoriesController");
 
 const router = express.Router();
 
-router.route("/").post( createCategory);
+router.route("/").post(IsAuthenticated, IsAdmin, createCategory);
 
 module.exports = router;
