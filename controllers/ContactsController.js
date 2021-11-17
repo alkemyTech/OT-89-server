@@ -29,7 +29,7 @@ const ContactsList = async (req, res, next) => {
 const StoreContact= async(req,res,next)=>{
   const {name,phone,email,message} =req.body
 
-  if(!name && !email){
+  if(!name || !email){
     res.status(400).json({message:"Todos los campos deben ser completados"})
   }else{
     const storeContact= await Contact.create(
