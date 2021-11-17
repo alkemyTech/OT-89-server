@@ -14,9 +14,9 @@ router.route("/:id").get(NewsById);
 
 //@METHOD PUT
 //@ROUTE /news/:id
-router.route("/news/:id").put(NewsUpdate)
+router.route("/:id").put(NewsUpdate)
 //DELETE
 //@ROUTE /news/:id
-router.route("/news/:id").delete(NewsDelete)
+router.route("/:id").delete(NewsDelete)
 
 module.exports = router;
