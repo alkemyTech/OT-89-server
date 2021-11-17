@@ -6,7 +6,7 @@ module.exports = {
       {
         name: "Actividad name test",
         content: "Actividad content test",
-        image: "Actividad image test",
+        image: "https://picsum.photos/200/300",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -17,7 +17,7 @@ module.exports = {
     return queryInterface.bulkDelete("Activities", {
       name: "Actividad name test",
       content: "Actividad description test",
-      image: "Actividad image test",
+      image: "https://picsum.photos/200/300",
     });
   },
 };
