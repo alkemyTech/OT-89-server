@@ -1,6 +1,6 @@
 
 const db = require("../models/index");
-const categories = db.sequelize.models.categories;
+const categories = db.sequelize.models.category;
 
 const update = async (id, dataBody) => {
   const data = {
