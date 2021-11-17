@@ -8,13 +8,13 @@ const router = express.Router();
 
 ///////////////////////////////////////////////////////POST CATEGORIE
 
-router.post("/categories", IsAuthenticated, IsAdmin, async (req, res) => {
+router.post("/", IsAuthenticated, IsAdmin, async (req, res) => {
     try{
         const name = req.body.name.trim();
         const description = req.body.description.trim();
 
         if(!name || !description){
-            res.status(204).json({ message: "All fields must be completed" });
+            res.status(400).json({ message: "All fields must be completed" });
         }else{
             const response = await Categories.create({
                 name: name,
@@ -23,7 +23,6 @@ router.post("/categories", IsAuthenticated, IsAdmin, async (req, res) => {
             {
                 fields: ["name", "description"]
             });
-
             res.status(201).json(response);
         }
     }
@@ -32,3 +31,4 @@ router.post("/categories", IsAuthenticated, IsAdmin, async (req, res) => {
     }
 });
 
+module.exports = router;

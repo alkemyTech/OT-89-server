@@ -13,6 +13,7 @@ const authRouter = require("./routes/auth");
 const contactsRouter = require("./routes/contacts")
 const awsRouter = require("./routes/aws");
 const memberRouter = require('./routes/member');
+const categoriesRouter = require("./routes/categoriesRoutes");
 
 
 const app = express();
@@ -36,6 +37,7 @@ app.use("/auth", authRouter);
 app.use("/contacts", contactsRouter);
 app.use("/aws", awsRouter);
 app.use('/members', memberRouter);
+app.use("/categories", categoriesRouter);
 
 
 // catch 404 and forward to error handler
