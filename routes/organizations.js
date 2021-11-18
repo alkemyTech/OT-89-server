@@ -5,8 +5,8 @@ const Organizations = db.sequelize.models.organization;
 
 /* GET home page. */
 router.get( async (req, res, next) => {
-    const {name, image, phone, address, welcomeText, facebook, linkedin, instagram} = await Organizations.findAll()
-    res.send({name, image, phone, address, welcomeText, facebook, linkedin, instagram})
+    const organization = await Organizations.findAll()
+    res.json(organization)
 });
 
 module.exports = router;
