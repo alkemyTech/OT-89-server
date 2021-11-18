@@ -1,15 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Organizations = require('../models/organization')
+const db = require('../models/index')
+const Organizations = db.sequelize.models.organization;
 
 /* GET home page. */
-router.get('/:id/public', async (req, res, next) => {
-    const {name, image, phone, address, welcomeText, instagram, facebook} = await Organizations.findAll({
-        where: {
-            organizationId: req.params.id
-        }
-    })
-    res.send({name, image, phone, address, welcomeText, instagram, facebook})
+router.get( async (req, res, next) => {
+    const {name, image, phone, address, welcomeText, facebook, linkedin, instagram} = await Organizations.findAll()
+    res.send({name, image, phone, address, welcomeText, facebook, linkedin, instagram})
 });
 
 module.exports = router;
