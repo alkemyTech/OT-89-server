@@ -30,12 +30,13 @@ router.post('/login',
             });
             const isMatch = user && (await CompareHash(password, user.password));
             if (!isMatch) {
-                res.json({
-                    message: "{ok:false}"
+                res.status(401).json({
+                    message: "Wrong credentials"
                 })
+            } else {
+                const token = await generateToken(user)
+                res.status(200).send({ message: "Login Successful.", token })
             }
-            const token = await generateToken(user)
-            res.send({ message: "Login Successful.", token })
         }
     }
 );
