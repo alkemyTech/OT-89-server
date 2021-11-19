@@ -1,15 +1,11 @@
 const express = require("express");
-<<<<<<< HEAD
-const { NewsList, NewsById, NewsUpdate, NewsDelete } = require("../controllers/NewsController");
-
-=======
 const {
   NewsList,
   NewsById,
-  News,
+  NewsUpdate,
   NewsDelete,
+  createNews,
 } = require("../controllers/NewsController");
->>>>>>> main
 
 const router = express.Router();
 
@@ -21,21 +17,15 @@ router.route("/").get(NewsList);
 //@ROUTE /news/:id
 router.route("/:id").get(NewsById);
 
-<<<<<<< HEAD
 //@METHOD PUT
 //@ROUTE /news/:id
-router.route("/:id").put(NewsUpdate)
-//DELETE
-//@ROUTE /news/:id
-router.route("/:id").delete(NewsDelete)
-=======
+router.route("/:id").put(NewsUpdate);
 //POST
 //@ROUTE /news
-router.route("/").post(News);
+router.route("/").post(createNews);
 
 //DELETE
 //@ROUTE /news/:id
 router.route("/:id").delete(NewsDelete);
->>>>>>> main
 
 module.exports = router;
