@@ -38,6 +38,9 @@ const StoreContact= async(req,res,next)=>{
         validation:true
       }
     )
+    const subject = "Su contacto fue recepcionado"
+    const text=`Tu contacto fue recibido correctamente, gracias ${name} por tu interés`
+    sendMail(email, subject, text)
     res.status(201).json({message:"Ok",data:storeContact})
   }
 
