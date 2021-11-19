@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const isAdmin = require("../helpers/auth/isAdmin");
+const isAdmin = require("../helpers/auth/IsAdmin");
 const IsAuthenticated = require("../helpers/auth/isAuthenticated");
 
 const {
