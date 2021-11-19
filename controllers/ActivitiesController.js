@@ -101,3 +101,4 @@ const updateActivity = async (req, res, next) => {
 };
 
 module.exports = { postActivity, getActivity, getActivityById, updateActivity };
+
