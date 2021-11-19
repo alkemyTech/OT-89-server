@@ -2,8 +2,9 @@ const express = require("express");
 const {
   NewsList,
   NewsById,
-  News,
+  NewsUpdate,
   NewsDelete,
+  createNews,
 } = require("../controllers/NewsController");
 
 const router = express.Router();
@@ -16,9 +17,12 @@ router.route("/").get(NewsList);
 //@ROUTE /news/:id
 router.route("/:id").get(NewsById);
 
+//@METHOD PUT
+//@ROUTE /news/:id
+router.route("/:id").put(NewsUpdate);
 //POST
 //@ROUTE /news
-router.route("/").post(News);
+router.route("/").post(createNews);
 
 //DELETE
 //@ROUTE /news/:id
