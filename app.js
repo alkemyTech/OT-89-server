@@ -12,7 +12,8 @@ const newsRouter = require("./routes/news");
 const authRouter = require("./routes/auth");
 const contactsRouter = require("./routes/contacts");
 const awsRouter = require("./routes/aws");
-const memberRouter = require("./routes/member");
+const memberRouter = require('./routes/member');
+const testimonialRouter = require('./routes/testimonial')
 const activitiesRouter = require("./routes/activities");
 const categoryRouter = require('./routes/category');
 
@@ -35,7 +36,8 @@ app.use("/news", newsRouter);
 app.use("/auth", authRouter);
 app.use("/contacts", contactsRouter);
 app.use("/aws", awsRouter);
-app.use("/members", memberRouter);
+app.use('/members', memberRouter);
+app.use('/testimonial', testimonialRouter);
 app.use("/activities", activitiesRouter);
 app.use('/category', categoryRouter);
 
