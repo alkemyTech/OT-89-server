@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const { isEmpty } = require("lodash");
 
+
 const Activity = db.sequelize.models.Activity;
 
 const postActivity = async (req, res, next) => {
@@ -101,4 +102,3 @@ const updateActivity = async (req, res, next) => {
 };
 
 module.exports = { postActivity, getActivity, getActivityById, updateActivity };
-
