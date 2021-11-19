@@ -100,5 +100,14 @@ const UpdateMember = async (req, res, next) => {
     next(err);
   }
 };
+const DeleteMember = async (req, res, next) => {
+  try {
+    const memberId = req.params.id;
+    Member.destroy({ where: { id: memberId } });
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports = { CreateMember, MembersList, UpdateMember };
+module.exports = { CreateMember, MembersList, UpdateMember, DeleteMember };

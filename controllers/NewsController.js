@@ -121,6 +121,31 @@ const NewsUpdate = async (req, res, next) => {
     }
   }
 
+const News=async(req,res,next)=>{
+  try {
+    const {name,image,content,categoryId}=req.body
+
+    if(!name || !image || !content || !categoryId ){
+      res.satus(400).json({message:"Todos los campos deben ser completados"})
+    }else{
+      const news= await Entry.create(
+        {name,image,content,categoryId,type:"news"},
+        {
+        attributes: ["name", "image","content","categoryId","type"],
+        validation:true,
+
+      })
+      res.status(201).json({message:"Ok!",data:news})
+    }
+
+
+  } catch (err) {
+    next(err);
+
+  }
+}
+
+
 const NewsDelete=async(req,res,next)=>{
   try {
     const id=req.params.id
@@ -141,9 +166,12 @@ const NewsDelete=async(req,res,next)=>{
 
 }
 
+
 module.exports = {
   NewsList,
   NewsById,
-  NewsUpdate, NewsDelete
+  NewsUpdate,
+  News,
+  NewsDelete
 };
 
