@@ -16,7 +16,7 @@ const categoriesRouter = require("./routes/categories")
 const memberRouter = require('./routes/member');
 const testimonialRouter = require('./routes/testimonial')
 const activitiesRouter = require("./routes/activities");
-const categoryRouter = require('./routes/category');
+const categoryRouter = require('./routes/categories');
 
 const app = express();
 app.use(cors());
