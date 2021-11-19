@@ -26,6 +26,38 @@ const postActivity = async (req, res, next) => {
   }
 };
 
+const getActivity = async (req, res, next) => {
+  try {
+    const activities = await Activity.findAll({
+      attributes: ["name", "image", "content"],
+    });
+    res
+      .status(200)
+      .json({ message: "Activities retrieved succesfully!", data: activities });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getActivityById = async (req, res, next) => {
+  try {
+    const { id: activityId } = req.params;
+    const activity = await Activity.findOne({
+      where: { id: activityId },
+      attributes: ["name", "image", "content"],
+    });
+    if (isEmpty(activity)) {
+      res.status(404).json({ message: "Activity not found" });
+    } else {
+      res
+        .status(200)
+        .json({ message: "Activity retrieved succesfully!", data: activity });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 const updateActivity = async (req, res, next) => {
   try {
     const { name, image, content } = req.body;
@@ -68,4 +100,5 @@ const updateActivity = async (req, res, next) => {
   }
 };
 
-module.exports = { postActivity, updateActivity };
+module.exports = { postActivity, getActivity, getActivityById, updateActivity };
+
