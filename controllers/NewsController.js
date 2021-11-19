@@ -10,11 +10,9 @@ const NewsList = async (req, res, next) => {
     const newsArr = await Entry.findAll({
       attributes: ["name", "image", "createdAt", "id"],
       where: {
-        type: "news"
+        type: "news",
       },
-      order: [
-        ["createdAt", "DESC"]
-      ],
+      order: [["createdAt", "DESC"]],
     });
 
     if (!newsArr) {
@@ -25,7 +23,7 @@ const NewsList = async (req, res, next) => {
     } else {
       res.status(200).json({
         message: "Ok!",
-        data: newsArr
+        data: newsArr,
       });
     }
   } catch (err) {
@@ -41,7 +39,7 @@ const NewsById = async (req, res, next) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
       res.status(400).json({
-        error: "Id must be valid!"
+        error: "Id must be valid!",
       });
       return;
     }
@@ -49,24 +47,24 @@ const NewsById = async (req, res, next) => {
     const news = await Entry.findOne({
       where: {
         type: "news",
-        id: id
-      }
+        id: id,
+      },
     });
 
     if (news) {
       res.status(200).json({
         message: "Ok!",
-        data: news
+        data: news,
       });
     } else {
       const newsByPk = await Entry.findByPk(id);
       if (!newsByPk) {
         res.status(400).json({
-          message: "Id not found!"
+          message: "Id not found!",
         });
       } else if (newsByPk) {
         res.status(400).json({
-          message: "This is not a news item!"
+          message: "This is not a news item!",
         });
       } else {
         throw new Error("Unexpected.");
@@ -79,99 +77,96 @@ const NewsById = async (req, res, next) => {
 
 const NewsUpdate = async (req, res, next) => {
   try {
-    const id = req.params.id
+    const id = req.params.id;
     const news = await Entry.findOne({
       where: {
         type: "news",
-        id: id
-      }
+        id: id,
+      },
     });
     if (!news) {
       res.status(404).json({
-        message: "No existe el id"
-      })
+        message: "No existe el id",
+      });
     } else {
-      const update = await Entry.update({
-        name: req.body.name,
-        image: req.body.image,
-        content: req.body.image,
-        categoryId: req.body.category,
-        type: req.body.type
-      }, {
-        where: {
-          id: id
+      const update = await Entry.update(
+        {
+          name: req.body.name,
+          image: req.body.image,
+          content: req.body.image,
+          categoryId: req.body.category,
+          type: req.body.type,
         },
-        validation: true
-      })
-      const noveletyUpdate = await Entry.findByPk(id)
+        {
+          where: {
+            id: id,
+          },
+          validation: true,
+        }
+      );
+      const noveletyUpdate = await Entry.findByPk(id);
       if (!noveletyUpdate) {
         res.status(404).json({
-          message: "Id no encontrado"
-        })
-
+          message: "Id no encontrado",
+        });
       } else {
         res.status(200).json({
           message: "Actualizado de forma correcta",
-          data: noveletyUpdate
+          data: noveletyUpdate,
         });
       }
-    }} catch (err) {
-      console.log(err)
-
     }
+  } catch (err) {
+    console.log(err);
   }
+};
 
-const News=async(req,res,next)=>{
+const createNews = async (req, res, next) => {
   try {
-    const {name,image,content,categoryId}=req.body
+    const { name, image, content, categoryId } = req.body;
 
-    if(!name || !image || !content || !categoryId ){
-      res.satus(400).json({message:"Todos los campos deben ser completados"})
-    }else{
-      const news= await Entry.create(
-        {name,image,content,categoryId,type:"news"},
+    if (!name || !image || !content || !categoryId) {
+      res
+        .satus(400)
+        .json({ message: "Todos los campos deben ser completados" });
+    } else {
+      const news = await Entry.create(
+        { name, image, content, categoryId, type: "news" },
         {
-        attributes: ["name", "image","content","categoryId","type"],
-        validation:true,
-
-      })
-      res.status(201).json({message:"Ok!",data:news})
+          attributes: ["name", "image", "content", "categoryId", "type"],
+          validation: true,
+        }
+      );
+      res.status(201).json({ message: "Ok!", data: news });
     }
-
-
   } catch (err) {
     next(err);
-
   }
-}
+};
 
-
-const NewsDelete=async(req,res,next)=>{
+const NewsDelete = async (req, res, next) => {
   try {
-    const id=req.params.id
+    const id = req.params.id;
     const news = await Entry.findOne({ where: { type: "news", id: id } });
-    if(!news){
-        res.status(404).json({message:"No existe el id buscado"})
-    }else{
-    const  newsDelete= await Entry.destroy({
-        where:{id:id}
-    })
-    res.status(200).json({message:"Eliminado con exito",data: newsDelete})
+    if (!news) {
+      res.status(404).json({ message: "No existe el id buscado" });
+    } else {
+      const newsDelete = await Entry.destroy({
+        where: { id: id },
+      });
+      res
+        .status(200)
+        .json({ message: "Eliminado con exito", data: newsDelete });
     }
-
   } catch (err) {
-    console.log(err)
-
+    console.log(err);
   }
-
-}
-
+};
 
 module.exports = {
   NewsList,
   NewsById,
   NewsUpdate,
-  News,
-  NewsDelete
+  createNews,
+  NewsDelete,
 };
-
