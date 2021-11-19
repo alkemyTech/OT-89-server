@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const isAdmin = require("../helpers/auth/IsAdmin");
+const isAdmin = require("../helpers/auth/isAdmin");
 const IsAuthenticated = require("../helpers/auth/isAuthenticated");
 
 const {
@@ -15,6 +15,6 @@ const {
 router.route("/").post(IsAuthenticated, isAdmin, postActivity);
 router.route("/").get(IsAuthenticated, isAdmin, getActivity);
 router.route("/:id").get(IsAuthenticated, isAdmin, getActivityById);
-router.route("/:id").put(IsAuthenticated, isAdmin, updateActivity);
+router.route("/:id").put(updateActivity);
 
 module.exports = router;
