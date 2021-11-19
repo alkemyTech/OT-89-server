@@ -1,7 +1,6 @@
 const db = require("../models/index");
 const { isEmpty } = require("lodash");
 
-
 const Activity = db.sequelize.models.Activity;
 
 const postActivity = async (req, res, next) => {
@@ -30,7 +29,7 @@ const postActivity = async (req, res, next) => {
 const getActivity = async (req, res, next) => {
   try {
     const activities = await Activity.findAll({
-      attributes: ["name", "image", "content"],
+      attributes: ["id", "name", "image", "content"],
     });
     res
       .status(200)
@@ -45,7 +44,7 @@ const getActivityById = async (req, res, next) => {
     const { id: activityId } = req.params;
     const activity = await Activity.findOne({
       where: { id: activityId },
-      attributes: ["name", "image", "content"],
+      attributes: ["id", "name", "image", "content"],
     });
     if (isEmpty(activity)) {
       res.status(404).json({ message: "Activity not found" });
