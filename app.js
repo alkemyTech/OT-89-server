@@ -39,7 +39,7 @@ app.use("/contacts", contactsRouter);
 app.use("/aws", awsRouter);
 app.use("/categories", categoriesRouter);
 app.use('/members', memberRouter);
-app.use('/testimonial', testimonialRouter);
+app.use('/testimonials', testimonialRouter);
 app.use("/activities", activitiesRouter);
 app.use('/category', categoryRouter);
 
