@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const { stringValidation } = require("../helpers/validation/modelValidation");
 module.exports = (sequelize, DataTypes) => {
   class Organization extends Model {
     /**
