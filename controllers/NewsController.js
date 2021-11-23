@@ -127,7 +127,7 @@ const createNews = async (req, res, next) => {
 
     if (!name || !image || !content || !categoryId) {
       res
-        .satus(400)
+        .status(400)
         .json({ message: "Todos los campos deben ser completados" });
     } else {
       const news = await Entry.create(
