@@ -28,8 +28,13 @@ const deleteService = async (id) => {
   });
   return deleteOpertion;
 };
+const getTestimonialsService = async () => {
+  const testimonials = await testimonials.findAll();
+  return testimonials;
+};
 
 module.exports = {
   updateService,
   deleteService,
+  getTestimonialsService,
 };
