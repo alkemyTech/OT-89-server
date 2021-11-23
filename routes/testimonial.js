@@ -4,7 +4,7 @@ const { updateOperation, deleteOperation, getOperation } = require('../controlle
 const IsAuthenticated = require("../helpers/auth/isAuthenticated");
 const IsAdmin = require("../helpers/auth/isAdmin");
 
-router.get('/', IsAuthenticated, IsAdmin, getOperation);
+router.get('/', getOperation);
 router.put("/:id", IsAuthenticated, IsAdmin, updateOperation);
 router.delete("/:id", IsAuthenticated, IsAdmin, deleteOperation);
 
