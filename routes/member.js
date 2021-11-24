@@ -13,18 +13,18 @@ const router = express.Router();
 
 //@DESC create a new member for the organization
 //@ROUTE /members
-router.route("/").post(IsAuthenticated, nameValidation, CreateMember);
+router.route("/").post(nameValidation, CreateMember);
 
 //@DESC retrieve a list of all members of the organization
 //@ROUTE /members
-router.route("/").get(IsAuthenticated, IsAdmin, MembersList);
+router.route("/").get(MembersList);
 
 //@DESC update a member's information
 //@ROUTE /members/:id
-router.route("/:id").put(IsAuthenticated, UpdateMember);
+router.route("/:id").put(UpdateMember);
 
 //@DESC delete a member from the organization
 //@ROUTE /members/:id
-router.delete("/:id", IsAuthenticated, IsAdmin, DeleteMember);
+router.route("/:id").delete(DeleteMember);
 
 module.exports = router;
