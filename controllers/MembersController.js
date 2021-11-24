@@ -2,7 +2,6 @@ const db = require("../models/index");
 const { validationResult } = require("express-validator");
 const { isEmpty } = require("lodash");
 
-
 const Member = db.sequelize.models.Member;
 
 //@DESC create a new member for the organization
@@ -18,12 +17,12 @@ const CreateMember = async (req, res, next) => {
       return;
     }
 
-    const { name } = req.body;
+    const { name, imageUrl } = req.body;
     const newMember = await Member.create(
-      { name: name },
+      { name, imageUrl },
       {
         validation: true,
-        fields: ["name"],
+        fields: ["name", "imageUrl"],
       }
     );
 
@@ -69,12 +68,9 @@ const UpdateMember = async (req, res, next) => {
     if (imageUrl) payload.imageUrl = imageUrl;
 
     if (isEmpty(payload)) {
-      res
-        .status(400)
-        .json({
-          message:
-            "Either a name or imageUrl is required to perform an update!",
-        });
+      res.status(400).json({
+        message: "Either a name or imageUrl is required to perform an update!",
+      });
       return;
     }
 
