@@ -2,12 +2,10 @@ const express = require("express");
 
 const AWS = require("aws-sdk");
 const multer = require("multer");
-const { v4: uuidv4 } = require("uuid");
+const uuid = require("uuid").v4;
 const awsConfig = require("../config/aws.config");
 
 const s3 = new AWS.S3(awsConfig);
-
-const router = express.Router();
 
 //-------------------------------------------------//
 
@@ -33,7 +31,7 @@ const uploadMiddleware = multer({
   }),
 }).single("image");
 
-const uploadImage = (req, res) => {
+const uploadImage = async (req, res) => {
   const { originalname, buffer, mimetype } = req.file;
 
   const fileName = originalname.split(".");
@@ -85,4 +83,4 @@ const deleteImage = (imageUrl) => {
   }
 };
 
-module.exports = { deleteImage, uploadMiddleware, getImages };
+module.exports = { deleteImage, uploadMiddleware, getImages, uploadImage };
