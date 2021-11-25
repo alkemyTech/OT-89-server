@@ -1,4 +1,3 @@
-
 const db = require("../models/index");
 const categories = db.sequelize.models.category;
 
@@ -18,14 +17,8 @@ const update = async (id, dataBody) => {
   } catch (e) {
     res.status(404).json({ message: "Cant make this request" });
   }
-  
 };
 
-
-
-
-
-  module.exports = {
-    update,
-
-  };
+module.exports = {
+  update,
+};

@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Categories = db.sequelize.models.Categories;
+const { update } = require("../services/categoryService");
 
 //@DESC Brings the whole list of category names
 //@ROUTE /categories
@@ -22,51 +23,58 @@ const CategoriesList = async (req, res, next) => {
   }
 };
 
-
 const createCategory = async (req, res, next) => {
-    try{
-        const {name, description} = req.body;
+  try {
+    const { name, description } = req.body;
 
-        if(!name || !description){
-            res.status(400).json({ message: "All fields must be completed" });
-        }else{
-            const response = await Categories.create({
-                name: name.trim(),
-                description: description.trim()
-            },
-            {
-                fields: ["name", "description"]
-            });
-
-            res.status(201).json(response);
+    if (!name || !description) {
+      res.status(400).json({ message: "All fields must be completed" });
+    } else {
+      const response = await Categories.create(
+        {
+          name: name.trim(),
+          description: description.trim(),
+        },
+        {
+          fields: ["name", "description"],
         }
+      );
+
+      res.status(201).json(response);
     }
-    catch(e){
-        next(e);
-    }
-}
-//eliminar categoria
+  } catch (e) {
+    next(e);
+  }
+};
 const deleteCategory = async (req, res, next) => {
-    try{
-        const {id} = req.params;
-        if(!id){
-            res.status(400).json({ message: "Id is required" });
-        } else {
-            const response = await Categories.destroy({
-                where: {
-                    id: id
-                }
-            });
-            if(response == 0){
-                res.status(404).json({ message: "Category not found" });
-            } else {
-                res.status(200).json({ message: "Category deleted" });
-            }
-        }
-    }
-    catch(e){
-        next(e);
-    }
+  try{
+      const {id} = req.params;
+      if(!id){
+          res.status(400).json({ message: "Id is required" });
+      } else {
+          const response = await Categories.destroy({
+              where: {
+                  id: id
+              }
+          });
+          if(response == 0){
+              res.status(404).json({ message: "Category not found" });
+          } else {
+              res.status(200).json({ message: "Category deleted" });
+          }
+      }
+  }
+  catch(e){
+      next(e);
+  }
 }
+const updateCategory = async (req, res) => {
+  const id = req.params.id;
+  const dataBody = req.body;
 
-module.exports = {createCategory, CategoriesList, deleteCategory};
+  await update(id, dataBody);
+
+  res.status(201).json("Operation Modified");
+};
+
+module.exports = { createCategory, CategoriesList, updateCategory, deleteCategory };

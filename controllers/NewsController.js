@@ -8,7 +8,7 @@ const Entry = db.sequelize.models.Entry;
 const NewsList = async (req, res, next) => {
   try {
     const newsArr = await Entry.findAll({
-      attributes: ["name", "image", "createdAt", "id"],
+      attributes: ["name", "image", "content", "createdAt", "id", "categoryId"],
       where: {
         type: "news",
       },
@@ -93,7 +93,7 @@ const NewsUpdate = async (req, res, next) => {
         {
           name: req.body.name,
           image: req.body.image,
-          content: req.body.image,
+          content: req.body.content,
           categoryId: req.body.category,
           type: req.body.type,
         },
@@ -124,12 +124,12 @@ const NewsUpdate = async (req, res, next) => {
 const createNews = async (req, res, next) => {
   try {
     const { name, image, content, categoryId } = req.body;
-
     if (!name || !image || !content || !categoryId) {
       res
         .status(400)
         .json({ message: "Todos los campos deben ser completados" });
     } else {
+      //FIXME: Entry.create() esta fallando. Causa: no se esta mandando una image url adecuadamente desde el cliente
       const news = await Entry.create(
         { name, image, content, categoryId, type: "news" },
         {
