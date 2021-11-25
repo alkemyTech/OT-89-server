@@ -1,59 +1,32 @@
 const express = require("express");
-const multer = require("multer");
-const uuid = require("uuid").v4;
 
+const {
+  uploadImage,
+  // uploadMiddleware,
+  getImages,
+  deleteImage,
+} = require("../controllers/ImageController");
+// const { v4: uuidv4 } = require("uuid");
+
+const multer = require("multer");
 const AWS = require("aws-sdk");
+
 const awsConfig = require("../config/aws.config");
 const s3 = new AWS.S3(awsConfig);
+const uuid = require("uuid").v4;
 
 const router = express.Router();
 
-// GET
-// Middleware to get the file from S3 still needs to be implemented
-router.get("/", async (req, res) => {
-  try {
-    const response = await s3
-      .listObjects({
-        Bucket: awsConfig.bucketName,
-      })
-      .promise();
+const uploadMiddleware = multer({
+  storage: multer.memoryStorage({
+    destination: (req, file, callback) => {
+      callback(null, "");
+    },
+  }),
+}).single("image");
 
-    res.send(response);
-  } catch (err) {
-    console.error(err, err.message);
-  }
-});
-
-// GET by ID
-// Middleware to get the file from S3 still needs to be implemented
-router.get("/:key", async (req, res) => {
-  const { key } = req.params;
-
-  try {
-    const response = await s3
-      .getObject({
-        Bucket: awsConfig.bucketName,
-        Key: key,
-      })
-      .promise();
-
-    res.send(response);
-  } catch (err) {
-    console.log(err, err.message);
-  }
-});
-
-// POST
-const storage = multer.memoryStorage({
-  destination: (req, file, cb) => {
-    cb(null, ".");
-  },
-});
-
-const upload = multer({ storage }).single("image");
-
-router.post("/upload", upload, (req, res) => {
-  const { originalname, buffer } = req.file;
+router.post("/upload", uploadMiddleware, (req, res) => {
+  const { originalname, buffer, mimetype } = req.file;
 
   const fileName = originalname.split(".");
   const fileExt = fileName[fileName.length - 1];
@@ -62,6 +35,8 @@ router.post("/upload", upload, (req, res) => {
     Key: `${uuid()}.${fileExt}`,
     Body: buffer,
     Bucket: awsConfig.bucketName,
+    ACL: "public-read",
+    ContentType: mimetype,
   };
 
   s3.upload(params, (err, data) => {
@@ -74,21 +49,6 @@ router.post("/upload", upload, (req, res) => {
   });
 });
 
-router.delete("/:key", async (req, res) => {
-  const { key } = req.params;
-
-  try {
-    const response = await s3
-      .deleteObject({
-        Bucket: awsConfig.bucketName,
-        Key: key,
-      })
-      .promise();
-
-    res.send(response);
-  } catch (err) {
-    console.log(err, err.message);
-  }
-});
+router.get("/", getImages);
 
 module.exports = router;

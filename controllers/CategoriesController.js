@@ -1,6 +1,5 @@
 const db = require("../models/index");
 const Categories = db.sequelize.models.Categories;
-const { update } = require("../services/categoryService");
 
 //@DESC Brings the whole list of category names
 //@ROUTE /categories
@@ -65,8 +64,8 @@ const deleteCategory = async (req, res, next) => {
     } else {
       const response = await Categories.destroy({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
       if (response == 0) {
         res.status(404).json({ message: "Category not found" });
@@ -74,18 +73,30 @@ const deleteCategory = async (req, res, next) => {
         res.status(200).json({ message: "Category deleted" });
       }
     }
-  }
-  catch (e) {
+  } catch (e) {
     next(e);
   }
-}
+};
 const updateCategory = async (req, res) => {
-  const id = req.params.id;
-  const dataBody = req.body;
+  const { id } = req.params;
+  const body = req.body;
 
-  await update(id, dataBody);
+  const response = await Categories.update(body, {
+    where: {
+      id: id,
+    },
+  });
 
-  res.status(201).json("Operation Modified");
+  if (response == 0) {
+    res.status(404).json({ message: "Category not found" });
+  }
+
+  res.status(200).json({ message: "Category updated" });
 };
 
-module.exports = { createCategory, getAllCategories, updateCategory, deleteCategory };
+module.exports = {
+  createCategory,
+  getAllCategories,
+  updateCategory,
+  deleteCategory,
+};

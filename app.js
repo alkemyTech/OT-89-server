@@ -12,11 +12,10 @@ const newsRouter = require("./routes/news");
 const authRouter = require("./routes/auth");
 const contactsRouter = require("./routes/contacts");
 const awsRouter = require("./routes/aws");
-const categoriesRouter = require("./routes/categories")
-const memberRouter = require('./routes/member');
-const testimonialRouter = require('./routes/testimonial')
+const categoriesRouter = require("./routes/categories");
+const memberRouter = require("./routes/member");
+const testimonialRouter = require("./routes/testimonial");
 const activitiesRouter = require("./routes/activities");
-
 
 const app = express();
 app.use(cors());
@@ -38,10 +37,9 @@ app.use("/auth", authRouter);
 app.use("/contacts", contactsRouter);
 app.use("/aws", awsRouter);
 app.use("/categories", categoriesRouter);
-app.use('/members', memberRouter);
-app.use('/testimonials', testimonialRouter);
+app.use("/members", memberRouter);
+app.use("/testimonials", testimonialRouter);
 app.use("/activities", activitiesRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
