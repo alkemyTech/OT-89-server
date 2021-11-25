@@ -5,7 +5,7 @@ const { update } = require("../services/categoryService");
 //@DESC Brings the whole list of category names
 //@ROUTE /categories
 //@METHOD GET
-const CategoriesList = async (req, res, next) => {
+const getAllCategories = async (req, res, next) => {
   try {
     const CategoriesArray = await Categories.findAll({
       attributes: ["id", "name", "description"],
@@ -21,6 +21,14 @@ const CategoriesList = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+const getCategoryById = async (res, req, next) => {
+  const { id } = req.body;
+
+  const
+
+  const category = await Categories.findById();
 };
 
 const createCategory = async (req, res, next) => {
