@@ -26,9 +26,12 @@ const getAllCategories = async (req, res, next) => {
 const getCategoryById = async (res, req, next) => {
   const { id } = req.body;
 
-  const
-
-  const category = await Categories.findById();
+  const category = await Categories.findById({ where: { id: id } });
+  if (!category) {
+    res.status(404).json({ message: "Category not found" });
+  } else {
+    res.status(200).json({ message: "Ok!", data: category });
+  }
 };
 
 const createCategory = async (req, res, next) => {
@@ -55,25 +58,25 @@ const createCategory = async (req, res, next) => {
   }
 };
 const deleteCategory = async (req, res, next) => {
-  try{
-      const {id} = req.params;
-      if(!id){
-          res.status(400).json({ message: "Id is required" });
+  try {
+    const { id } = req.params;
+    if (!id) {
+      res.status(400).json({ message: "Id is required" });
+    } else {
+      const response = await Categories.destroy({
+        where: {
+          id: id
+        }
+      });
+      if (response == 0) {
+        res.status(404).json({ message: "Category not found" });
       } else {
-          const response = await Categories.destroy({
-              where: {
-                  id: id
-              }
-          });
-          if(response == 0){
-              res.status(404).json({ message: "Category not found" });
-          } else {
-              res.status(200).json({ message: "Category deleted" });
-          }
+        res.status(200).json({ message: "Category deleted" });
       }
+    }
   }
-  catch(e){
-      next(e);
+  catch (e) {
+    next(e);
   }
 }
 const updateCategory = async (req, res) => {
@@ -85,4 +88,4 @@ const updateCategory = async (req, res) => {
   res.status(201).json("Operation Modified");
 };
 
-module.exports = { createCategory, CategoriesList, updateCategory, deleteCategory };
+module.exports = { createCategory, getAllCategories, updateCategory, deleteCategory };

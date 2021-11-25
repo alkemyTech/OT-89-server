@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-    CategoriesList,
+    getAllCategories,
     createCategory,
     updateCategory,
     deleteCategory,
@@ -14,7 +14,7 @@ const router = express.Router();
 //@ROUTE /categories
 router.delete("/:id", IsAuthenticated, IsAdmin, deleteCategory);
 router.post("/", IsAuthenticated, IsAdmin, createCategory);
-router.get("/", IsAuthenticated, IsAdmin, CategoriesList);
+router.get("/", IsAuthenticated, IsAdmin, getAllCategories);
 router.put("/:id", IsAuthenticated, IsAdmin, updateCategory);
 
 module.exports = router;
