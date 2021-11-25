@@ -25,10 +25,10 @@ router.get("/", IsAuthenticated, IsAdmin, async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const { firstName, lastName, email } = await User.findByPk(req.params.id);
+    const { firstName, lastName, email, roleId } = await User.findByPk(req.params.id);
 
     const response = { firstName, lastName, email, roleId };
-
+    console.log(response);
     res.json({ data: response });
   } catch (e) {
     res.status(404).json({ message: e.message });

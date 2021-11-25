@@ -45,5 +45,28 @@ const createCategory = async (req, res, next) => {
         next(e);
     }
 }
-module.exports = {createCategory, CategoriesList};
+//eliminar categoria
+const deleteCategory = async (req, res, next) => {
+    try{
+        const {id} = req.params;
+        if(!id){
+            res.status(400).json({ message: "Id is required" });
+        } else {
+            const response = await Categories.destroy({
+                where: {
+                    id: id
+                }
+            });
+            if(response == 0){
+                res.status(404).json({ message: "Category not found" });
+            } else {
+                res.status(200).json({ message: "Category deleted" });
+            }
+        }
+    }
+    catch(e){
+        next(e);
+    }
+}
 
+module.exports = {createCategory, CategoriesList, deleteCategory};
