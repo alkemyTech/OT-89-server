@@ -1,5 +1,5 @@
 const db = require("../models/index");
-const testimonials = db.sequelize.models.testimonials;
+const Testimonials = db.sequelize.models.testimonials;
 
 const updateService = async (id, dataBody) => {
   const data = {
@@ -9,7 +9,7 @@ const updateService = async (id, dataBody) => {
   };
   const byEntry = await getByentryId(id);
   try {
-    return await testimonials.update(data, {
+    return await Testimonials.update(data, {
       returning: true,
       where: {
         id: id,
@@ -21,7 +21,7 @@ const updateService = async (id, dataBody) => {
 };
 
 const deleteService = async (id) => {
-  const deleteOpertion = await testimonials.destroy({
+  const deleteOpertion = await Testimonials.destroy({
     where: {
       id: id,
     },
@@ -29,7 +29,7 @@ const deleteService = async (id) => {
   return deleteOpertion;
 };
 const getTestimonialsService = async () => {
-  const testimonials = await testimonials.findAll();
+  const testimonials = await Testimonials.findAll();
   return testimonials;
 };
 
