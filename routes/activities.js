@@ -9,6 +9,7 @@ const {
   getActivity,
   getActivityById,
   updateActivity,
+  deleteActivity,
 } = require("../controllers/ActivitiesController");
 
 // POST activities to the database validation information
@@ -16,5 +17,6 @@ router.route("/").post(IsAuthenticated, isAdmin, postActivity);
 router.route("/").get(IsAuthenticated, isAdmin, getActivity);
 router.route("/:id").get(IsAuthenticated, isAdmin, getActivityById);
 router.route("/:id").put(IsAuthenticated, isAdmin, updateActivity);
+router.route("/:id").delete(IsAuthenticated, isAdmin, deleteActivity);
 
 module.exports = router;
