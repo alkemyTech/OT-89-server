@@ -29,7 +29,9 @@ const deleteService = async (id) => {
   return deleteOpertion;
 };
 const getTestimonialsService = async () => {
-  const testimonials = await Testimonials.findAll();
+  const testimonials = await Testimonials.findAll({
+    order: [["createdAt", "DESC"]],
+  });
   return testimonials;
 };
 
