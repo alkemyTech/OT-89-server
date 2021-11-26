@@ -8,7 +8,7 @@ const updateOperation = async (req, res) => {
   const id = req.params.id;
   const dataBody = req.body;
 
-  const updateTestimonial = await updateService(id, dataBody);
+  await updateService(id, dataBody);
   res.status(201).json("Operation Modified");
 };
 

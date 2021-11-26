@@ -7,7 +7,7 @@ const updateService = async (id, dataBody) => {
     image: dataBody.image,
     content: dataBody.content,
   };
-  const byEntry = await getByentryId(id);
+
   try {
     return await Testimonials.update(data, {
       returning: true,

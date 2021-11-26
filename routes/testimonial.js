@@ -15,6 +15,7 @@ router.post('/', IsAuthenticated, IsAdmin, (req, res) => {
     if (req.body.name && req.body.content) {
         Testimonials.create({
             name: req.body.name,
+            image: req.body.image,
             content: req.body.content
         }).then(() => {
             res.send({ message: 'Testimonial created' })
