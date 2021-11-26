@@ -4,6 +4,7 @@ const { isEmpty } = require("lodash");
 const Activity = db.sequelize.models.Activity;
 
 const postActivity = async (req, res, next) => {
+  console.log(req.body);
   try {
     const { name, content, image } = req.body;
 

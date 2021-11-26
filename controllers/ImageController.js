@@ -31,7 +31,7 @@ const uploadMiddleware = multer({
   }),
 }).single("image");
 
-const uploadImage = async (req, res) => {
+const uploadImage = async (req, res, next) => {
   const { originalname, buffer, mimetype } = req.file;
 
   const fileName = originalname.split(".");
@@ -47,7 +47,7 @@ const uploadImage = async (req, res) => {
 
   s3.upload(params, (err, data) => {
     if (err) {
-      res.status(500).json({ error: err });
+      res.status(400).json({ error: err });
     }
 
     console.log(data);
