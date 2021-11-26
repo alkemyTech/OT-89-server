@@ -48,10 +48,9 @@ const uploadImage = async (req, res) => {
   s3.upload(params, (err, data) => {
     if (err) {
       res.status(500).json({ error: err });
+    } else {
+      data.Key = res.status(200).json({ data });
     }
-
-    console.log(data);
-    data.Key = res.status(200).json({ data });
   });
 };
 
