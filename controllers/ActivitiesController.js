@@ -99,5 +99,27 @@ const updateActivity = async (req, res, next) => {
     next(err);
   }
 };
-
-module.exports = { postActivity, getActivity, getActivityById, updateActivity };
+//eliminar
+const deleteActivity = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      res.status(400).json({ message: "Id is required" });
+    } else {
+      const response = await Activity.destroy({
+        where: {
+          id: id
+        }
+      });
+      if (response == 0) {
+        res.status(404).json({ message: "Activity not found" });
+      } else {
+        res.status(200).json({ message: "Activity deleted" });
+      }
+    }
+  }
+  catch (e) {
+    next(e);
+  }
+}
+module.exports = { postActivity, getActivity, getActivityById, updateActivity, deleteActivity };
