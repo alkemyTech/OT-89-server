@@ -5,25 +5,25 @@ const Entry = db.sequelize.models.Entry;
 //@DESC Brings the whole list of news
 //@ROUTE /news
 //@METHOD GET
-const NewsList = async (req, res, next) => {
+const getAllNews = async (req, res, next) => {
   try {
-    const newsArr = await Entry.findAll({
+    const allNews = await Entry.findAll({
       attributes: ["name", "image", "content", "createdAt", "id", "categoryId"],
       where: {
-        type: "news",
+        type: "allNews",
       },
       order: [["createdAt", "DESC"]],
     });
 
-    if (!newsArr) {
+    if (!allNews) {
       throw new Error("Unexpected.");
-    } else if (newsArr.length == 0) {
+    } else if (allNews.length == 0) {
       res.sendStatus(204); //Fun fact, no body will be sent with a 204 response
-      //.json({ message: "No content could be found.",data: newsArr});
+      //.json({ message: "No content could be found.",data: allNews});
     } else {
       res.status(200).json({
         message: "Ok!",
-        data: newsArr,
+        data: allNews,
       });
     }
   } catch (err) {
@@ -34,7 +34,7 @@ const NewsList = async (req, res, next) => {
 //@DESC single news by id
 //@ROUTE /news/:id
 //@METHOD GET
-const NewsById = async (req, res, next) => {
+const getNewsById = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
@@ -44,17 +44,17 @@ const NewsById = async (req, res, next) => {
       return;
     }
 
-    const news = await Entry.findOne({
+    const newsById = await Entry.findOne({
       where: {
         type: "news",
         id: id,
       },
     });
 
-    if (news) {
+    if (newsById) {
       res.status(200).json({
         message: "Ok!",
-        data: news,
+        data: newsById,
       });
     } else {
       const newsByPk = await Entry.findByPk(id);
@@ -75,7 +75,30 @@ const NewsById = async (req, res, next) => {
   }
 };
 
-const NewsUpdate = async (req, res, next) => {
+const createNews = async (req, res, next) => {
+  try {
+    const { name, image, content, categoryId } = req.body;
+    if (!name || !image || !content || !categoryId) {
+      res
+        .status(400)
+        .json({ message: "Todos los campos deben ser completados" });
+    } else {
+      //FIXME: Entry.create() esta fallando. Causa: no se esta mandando una image url adecuadamente desde el cliente
+      const news = await Entry.create(
+        { name, image, content, categoryId, type: "news" },
+        {
+          attributes: ["name", "image", "content", "categoryId", "type"],
+          validation: true,
+        }
+      );
+      res.status(201).json({ message: "Ok!", data: news });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateNews = async (req, res, next) => {
   try {
     const id = req.params.id;
     const news = await Entry.findOne({
@@ -121,42 +144,19 @@ const NewsUpdate = async (req, res, next) => {
   }
 };
 
-const createNews = async (req, res, next) => {
-  try {
-    const { name, image, content, categoryId } = req.body;
-    if (!name || !image || !content || !categoryId) {
-      res
-        .status(400)
-        .json({ message: "Todos los campos deben ser completados" });
-    } else {
-      //FIXME: Entry.create() esta fallando. Causa: no se esta mandando una image url adecuadamente desde el cliente
-      const news = await Entry.create(
-        { name, image, content, categoryId, type: "news" },
-        {
-          attributes: ["name", "image", "content", "categoryId", "type"],
-          validation: true,
-        }
-      );
-      res.status(201).json({ message: "Ok!", data: news });
-    }
-  } catch (err) {
-    next(err);
-  }
-};
-
-const NewsDelete = async (req, res, next) => {
+const deleteNews = async (req, res, next) => {
   try {
     const id = req.params.id;
     const news = await Entry.findOne({ where: { type: "news", id: id } });
     if (!news) {
       res.status(404).json({ message: "No existe el id buscado" });
     } else {
-      const newsDelete = await Entry.destroy({
+      const deletedNews = await Entry.destroy({
         where: { id: id },
       });
       res
         .status(200)
-        .json({ message: "Eliminado con exito", data: newsDelete });
+        .json({ message: "Eliminado con exito", data: deletedNews });
     }
   } catch (err) {
     console.log(err);
@@ -164,9 +164,9 @@ const NewsDelete = async (req, res, next) => {
 };
 
 module.exports = {
-  NewsList,
-  NewsById,
-  NewsUpdate,
+  getAllNews,
+  getNewsById,
+  updateNews,
   createNews,
-  NewsDelete,
+  deleteNews,
 };
