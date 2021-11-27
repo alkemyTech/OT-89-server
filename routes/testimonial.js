@@ -7,13 +7,13 @@ const IsAdmin = require("../helpers/auth/isAdmin");
 const {
   getTestimonials,
   createTestimonials,
-  deleteOperation,
   updateTestimonials,
+  deletedTestimonial,
 } = require("../controllers/testimonialsControllers");
 
 router.route("/").get(getTestimonials);
-router.route("/").post(createTestimonials);
-router.route("/:id").put(updateTestimonials);
-router.route("/:id").delete(IsAuthenticated, IsAdmin, deleteOperation);
+router.route("/").post(IsAuthenticated, IsAdmin, createTestimonials);
+router.route("/:id").put(IsAuthenticated, IsAdmin, updateTestimonials);
+router.route("/:id").delete(IsAuthenticated, IsAdmin, deletedTestimonial);
 
 module.exports = router;

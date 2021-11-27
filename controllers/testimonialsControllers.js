@@ -58,15 +58,22 @@ const updateTestimonials = async (req, res, next) => {
   }
 };
 
-const deleteOperation = async (req, res) => {
-  const id = req.params.id;
+const deletedTestimonial = async (req, res, next) => {
+  try {
+    const { id: testimonialId } = req.params;
+    const deletedTestimonial = await Testimonials.destroy({
+      where: {
+        id: testimonialId,
+      },
+    });
 
-  const deletedTestimonial = await deleteService(id);
-
-  if (deletedTestimonial == 1) {
-    res.status(200).json({ message: "Testimonial Deleted" });
-  } else {
-    res.status(400).json({ message: "Testimonial dont exist" });
+    if (deletedTestimonial) {
+      res.status(200).json({
+        message: "Testimonio eliminado correctamente",
+      });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -74,5 +81,5 @@ module.exports = {
   getTestimonials,
   createTestimonials,
   updateTestimonials,
-  deleteOperation,
+  deletedTestimonial,
 };
