@@ -15,15 +15,16 @@ const getAllNews = async (req, res, next) => {
       order: [["createdAt", "DESC"]],
     });
 
-    if (!allNews) {
-      throw new Error("Unexpected.");
-    } else if (allNews.length == 0) {
-      res.sendStatus(204); //Fun fact, no body will be sent with a 204 response
-      //.json({ message: "No content could be found.",data: allNews});
-    } else {
+    if (allNews) {
       res.status(200).json({
-        message: "Ok!",
+        message: "All news fetched successfully!",
         data: allNews,
+      });
+    }
+
+    if (!allNews) {
+      res.status(404).json({
+        message: "No news found!",
       });
     }
   } catch (err) {
