@@ -2,7 +2,33 @@ const {
   updateService,
   deleteService,
   getTestimonialsService,
+  createTestimonialsService,
 } = require("../services/testimonialsService");
+
+const getOperation = async (req, res) => {
+  const getTestimonials = await getTestimonialsService();
+  if (getTestimonials.length > 0) {
+    res.status(200).json(getTestimonials);
+  } else {
+    res.status(400).json({ message: "No hay testimonios para mostrar" });
+  }
+};
+
+const createOperation = async (req, res) => {
+  const { name, image, content } = req.body;
+
+  const createTestimonial = await createTestimonialsService({
+    name,
+    image,
+    content,
+  });
+
+  if (createTestimonial) {
+    res
+      .status(201)
+      .json({ message: "Testimonial Created", data: createTestimonial });
+  }
+};
 
 const updateOperation = async (req, res) => {
   const id = req.params.id;
@@ -24,18 +50,9 @@ const deleteOperation = async (req, res) => {
   }
 };
 
-const getOperation = async (req, res) => {
-  const getTestimonials = await getTestimonialsService();
-  if (getTestimonials.length > 0) {
-    res.status(200).json(getTestimonials);
-  } else {
-    res.status(400).json("No hay testimonios");
-  }
-};
-
-
 module.exports = {
   updateOperation,
   deleteOperation,
   getOperation,
+  createOperation,
 };

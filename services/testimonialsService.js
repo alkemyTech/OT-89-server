@@ -28,6 +28,7 @@ const deleteService = async (id) => {
   });
   return deleteOpertion;
 };
+
 const getTestimonialsService = async () => {
   const testimonials = await Testimonials.findAll({
     order: [["createdAt", "DESC"]],
@@ -35,8 +36,23 @@ const getTestimonialsService = async () => {
   return testimonials;
 };
 
+const createTestimonialsService = async ({ name, content, image }) => {
+  try {
+    if (name && content) {
+      return await Testimonials.create({
+        name: name,
+        content: content,
+        image: image,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   updateService,
   deleteService,
   getTestimonialsService,
+  createTestimonialsService,
 };
