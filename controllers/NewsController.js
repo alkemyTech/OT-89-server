@@ -37,39 +37,19 @@ const getAllNews = async (req, res, next) => {
 //@METHOD GET
 const getNewsById = async (req, res, next) => {
   try {
-    const id = parseInt(req.params.id);
-    if (isNaN(id)) {
-      res.status(400).json({
-        error: "Id must be valid!",
-      });
-      return;
-    }
+    const { id: newsId } = req.params;
 
-    const newsById = await Entry.findOne({
+    const news = await Entry.findOne({
       where: {
         type: "news",
-        id: id,
+        id: newsId,
       },
     });
 
-    if (newsById) {
-      res.status(200).json({
-        message: "Ok!",
-        data: newsById,
-      });
+    if (!news) {
+      res.status(404).json({ message: "No existe el id buscado" });
     } else {
-      const newsByPk = await Entry.findByPk(id);
-      if (!newsByPk) {
-        res.status(400).json({
-          message: "Id not found!",
-        });
-      } else if (newsByPk) {
-        res.status(400).json({
-          message: "This is not a news item!",
-        });
-      } else {
-        throw new Error("Unexpected.");
-      }
+      res.status(200).json({ message: "Ok!", data: news });
     }
   } catch (err) {
     next(err);
