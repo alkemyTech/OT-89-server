@@ -17,13 +17,13 @@ const getAllNews = async (req, res, next) => {
 
     if (allNews.length === 0) {
       res.status(404).json({
-        message: "No news found!",
+        message: "No hay noticias. Crea la primera!",
       });
     }
 
     if (allNews) {
       res.status(200).json({
-        message: "All news fetched successfully!",
+        message: "Todas las noticias mostradas correctamente!",
         data: allNews,
       });
     }
@@ -115,20 +115,18 @@ const updateNews = async (req, res, next) => {
 
 const deleteNews = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const news = await Entry.findOne({ where: { type: "news", id: id } });
+    const { id: newsId } = req.params;
+
+    const news = await Entry.findOne({ where: { type: "news", id: newsId } });
+
     if (!news) {
       res.status(404).json({ message: "No existe el id buscado" });
-    } else {
-      const deletedNews = await Entry.destroy({
-        where: { id: id },
-      });
-      res
-        .status(200)
-        .json({ message: "Eliminado con exito", data: deletedNews });
     }
+
+    const deletedNews = await Entry.destroy({ where: { id: newsId } });
+    res.status(200).json({ message: "Eliminado con exito", data: deletedNews });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
