@@ -1,32 +1,38 @@
-const {
-  updateService,
-  deleteService,
-  getTestimonialsService,
-  createTestimonialsService,
-} = require("../services/testimonialsService");
+const db = require("../models/index");
+const Testimonials = db.sequelize.models.testimonials;
 
-const getOperation = async (req, res) => {
-  const getTestimonials = await getTestimonialsService();
-  if (getTestimonials.length > 0) {
-    res.status(200).json(getTestimonials);
+const getTestimonials = async (req, res) => {
+  const testimonials = await Testimonials.findAll({
+    order: [["createdAt", "DESC"]],
+  });
+
+  if (testimonials.length > 0) {
+    res
+      .status(200)
+      .json({ message: "Mostrando testimonios", data: testimonials });
   } else {
-    res.status(400).json({ message: "No hay testimonios para mostrar" });
+    res.status(404).json({ message: "No testimonials found" });
   }
 };
 
-const createOperation = async (req, res) => {
+const createTestimonials = async (req, res, next) => {
   const { name, image, content } = req.body;
 
-  const createTestimonial = await createTestimonialsService({
-    name,
-    image,
-    content,
-  });
+  try {
+    if (name && content) {
+      const createdTestimonial = await Testimonials.create({
+        name,
+        content,
+        image: image || "",
+      });
 
-  if (createTestimonial) {
-    res
-      .status(201)
-      .json({ message: "Testimonial Created", data: createTestimonial });
+      res.status(200).json({
+        message: "Testimonio creado correctamente",
+        data: createdTestimonial,
+      });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -54,8 +60,8 @@ const deleteOperation = async (req, res) => {
 };
 
 module.exports = {
+  getTestimonials,
+  createTestimonials,
   updateOperation,
   deleteOperation,
-  getOperation,
-  createOperation,
 };
