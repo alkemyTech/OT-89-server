@@ -36,15 +36,26 @@ const createTestimonials = async (req, res, next) => {
   }
 };
 
-const updateOperation = async (req, res) => {
-  const { id } = req.params;
-  const dataBody = req.body;
+const updateTestimonials = async (req, res, next) => {
+  try {
+    const { id: testimonialId } = req.params;
+    const dataBody = req.body;
 
-  const updatedTestomonial = await updateService(id, dataBody);
+    const updatedTestimonial = await Testimonials.update(dataBody, {
+      returnning: true,
+      where: {
+        id: testimonialId,
+      },
+    });
 
-  res
-    .status(201)
-    .json({ message: "Operation Modified", data: updatedTestomonial });
+    if (updatedTestimonial) {
+      res.status(200).json({
+        message: "Testimonio actualizado correctamente",
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
 };
 
 const deleteOperation = async (req, res) => {
@@ -62,6 +73,6 @@ const deleteOperation = async (req, res) => {
 module.exports = {
   getTestimonials,
   createTestimonials,
-  updateOperation,
+  updateTestimonials,
   deleteOperation,
 };
