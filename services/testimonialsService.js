@@ -1,6 +1,27 @@
 const db = require("../models/index");
 const Testimonials = db.sequelize.models.testimonials;
 
+const getTestimonialsService = async () => {
+  const testimonials = await Testimonials.findAll({
+    order: [["createdAt", "DESC"]],
+  });
+  return testimonials;
+};
+
+const createTestimonialsService = async ({ name, content, image }) => {
+  try {
+    if (name && content) {
+      return await Testimonials.create({
+        name: name,
+        content: content,
+        image: image,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const updateService = async (id, dataBody) => {
   const data = {
     name: dataBody.name,
@@ -27,27 +48,6 @@ const deleteService = async (id) => {
     },
   });
   return deleteOpertion;
-};
-
-const getTestimonialsService = async () => {
-  const testimonials = await Testimonials.findAll({
-    order: [["createdAt", "DESC"]],
-  });
-  return testimonials;
-};
-
-const createTestimonialsService = async ({ name, content, image }) => {
-  try {
-    if (name && content) {
-      return await Testimonials.create({
-        name: name,
-        content: content,
-        image: image,
-      });
-    }
-  } catch (err) {
-    console.log(err);
-  }
 };
 
 module.exports = {

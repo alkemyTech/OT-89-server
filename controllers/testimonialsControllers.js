@@ -31,22 +31,25 @@ const createOperation = async (req, res) => {
 };
 
 const updateOperation = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const dataBody = req.body;
 
-  await updateService(id, dataBody);
-  res.status(201).json("Operation Modified");
+  const updatedTestomonial = await updateService(id, dataBody);
+
+  res
+    .status(201)
+    .json({ message: "Operation Modified", data: updatedTestomonial });
 };
 
 const deleteOperation = async (req, res) => {
   const id = req.params.id;
 
-  const deleteOpertion = await deleteService(id);
+  const deletedTestimonial = await deleteService(id);
 
-  if (deleteOpertion == 1) {
-    res.status(200).json("Testimonial Deleted");
+  if (deletedTestimonial == 1) {
+    res.status(200).json({ message: "Testimonial Deleted" });
   } else {
-    res.status(400).json("Testimonial dont exist");
+    res.status(400).json({ message: "Testimonial dont exist" });
   }
 };
 

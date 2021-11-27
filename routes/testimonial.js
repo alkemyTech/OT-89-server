@@ -12,7 +12,7 @@ const {
 } = require("../controllers/testimonialsControllers");
 
 router.route("/").get(getOperation);
-router.route("/").post(createOperation);
+router.route("/").post(IsAuthenticated, IsAdmin, createOperation);
 router.route("/:id").put(IsAuthenticated, IsAdmin, updateOperation);
 router.route("/:id").delete(IsAuthenticated, IsAdmin, deleteOperation);
 
