@@ -22,14 +22,20 @@ const getAllCategories = async (req, res, next) => {
   }
 };
 
-const getCategoryById = async (res, req, next) => {
-  const { id } = req.body;
+const getCategoryById = async (req, res, next) => {
+  console.log(req.params);
+  try {
+    const { id } = req.params;
 
-  const category = await Categories.findById({ where: { id: id } });
-  if (!category) {
-    res.status(404).json({ message: "Category not found" });
-  } else {
-    res.status(200).json({ message: "Ok!", data: category });
+    const category = await Categories.findOne({ where: { id: id } });
+    if (!category) {
+      res.status(404).json({ message: "Category not found" });
+    } else {
+      res.status(200).json({ message: "Ok!", data: category });
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 };
 
@@ -80,18 +86,22 @@ const deleteCategory = async (req, res, next) => {
 const updateCategory = async (req, res) => {
   const { id } = req.params;
   const body = req.body;
-
-  const response = await Categories.update(body, {
-    where: {
-      id: id,
-    },
-  });
-
-  if (response == 0) {
-    res.status(404).json({ message: "Category not found" });
+  try {
+    const response = await Categories.update(body, {
+      where: {
+        id: id,
+      },
+    });
+    console.log(response);
+    if (response == 0) {
+      res.status(404).json({ message: "Category not found" });
+    } else {
+      const resBody = { ...body, id: id }
+      res.status(200).json({ message: "Category updated", data: resBody });
+    }
+  } catch (e) {
+    res.status(400).json({ message: "Error updating category" });
   }
-
-  res.status(200).json({ message: "Category updated" });
 };
 
 module.exports = {
@@ -99,4 +109,5 @@ module.exports = {
   getAllCategories,
   updateCategory,
   deleteCategory,
+  getCategoryById,
 };
