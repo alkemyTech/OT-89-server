@@ -94,7 +94,7 @@ const NewsUpdate = async (req, res, next) => {
           name: req.body.name,
           image: req.body.image,
           content: req.body.content,
-          categoryId: req.body.category,
+          categoryId: req.body.categoryId,
           type: req.body.type,
         },
         {
@@ -129,7 +129,6 @@ const createNews = async (req, res, next) => {
         .status(400)
         .json({ message: "Todos los campos deben ser completados" });
     } else {
-      //FIXME: Entry.create() esta fallando. Causa: no se esta mandando una image url adecuadamente desde el cliente
       const news = await Entry.create(
         { name, image, content, categoryId, type: "news" },
         {
