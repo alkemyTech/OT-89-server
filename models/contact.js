@@ -29,7 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(15),
         allowNull: false,
         validate: {
-          args: stringValidation(10, 15),
+          is: {
+            args: stringValidation(10, 15),
+          },
         },
       },
       email: {
